@@ -94,7 +94,7 @@ var similarPinTemplate = document.querySelector('#pin').content.querySelector('.
 var renderPin = function (pin) {
   var pinElement = similarPinTemplate.cloneNode(true);
 
-  pinElement.style = 'left: appartments[i].location[0] + 'px'; top: appartments[i].location[1] + 'px';'
+  // pinElement.style = 'left: appartments[i].location[0] + 'px'; top: appartments[i].location[1] + 'px';'
   pinElement.src = appartments[i].author;
   pinElement.alt = appartments[i].offer.title;
 
