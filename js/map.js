@@ -72,7 +72,7 @@ var createAppartments = function (appartmentsQuantity) {
 //создаю массив объектов с жильём
 createAppartments(APPARTMENTS_QUANTITY);
 
-console.log(appartments);
+
 
 //  у блока .map убираю класс .map--faded
 var map = document.querySelector('.map');
@@ -84,25 +84,67 @@ map.classList.remove('map--faded');
 
 //-----------------------------------Задание №3----------------------------------------------------
 
-//  3.1 Рисую метку
+//  3. Создаю метки
 //  нахожу место в разметке, куда буду вставлять похожие друг на друга метки на карте
 var similarListElement = document.querySelector('.map__pins');
 //  нахожу шаблон, по которому буду создавать метку
 var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-//  вставляю метку в соответствии с шаблоном
-var renderPin = function (pin) {
+//  пишу функцию для генерирования метки в соответствии с шаблоном
+var renderPin = function (appartment) {
   var pinElement = similarPinTemplate.cloneNode(true);
 
-  // pinElement.style = 'left: appartments[i].location[0] + 'px'; top: appartments[i].location[1] + 'px';'
-  pinElement.src = appartments[i].author;
-  pinElement.alt = appartments[i].offer.title;
+  pinElement.style.left = appartment.location.x + 'px';
+  pinElement.style.top = appartment.location.y + 'px';
+  pinElement.children[0].src = appartment.author;
+  pinElement.children[0].alt = appartment.offer.title;
 
   return pinElement;
 };
 
+// создаю набор меток по шаблону
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < appartments.length; i++) {
   fragment.appendChild(renderPin(appartments[i]));
 }
+
+//  вставляю набор меток в разметку, в блок с классом '.map__pins'
 similarListElement.appendChild(fragment);
+
+
+
+
+//  5. Создаю карточки объявлений
+//  нахожу место в разметке, куда буду вставлять карточки объявлений на карте
+var similarListElement = document.querySelector('.map');
+//  нахожу шаблон, по которому буду создавать карточку обяъвления
+var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+
+//  пишу функцию для генерирования карточки объявления в соответствии с шаблоном
+var renderCard = function (appartment) {
+  var cardElement = similarCardTemplate.cloneNode(true);
+
+  cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
+  cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + 'Р/ночь';
+  cardElement.querySelector('.popup__type').textContent = appartment.offer.type;
+  cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.quests + ' гостей';
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + 'appartment.offer.checkout';
+  cardElement.querySelector('.popup__features').textContent = appartment.offer.features;
+  cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
+  // cardElement.querySelector('.popup__photos').textContent = appartment.offer.description;
+
+  return renderCard;
+};
+
+// создаю набор объявлений по шаблону
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < appartments.length; i++) {
+  fragment.appendChild(renderCard(appartments[i]));
+}
+
+//  нахожу блок фильтра, перед которым буду вставлять fragment с карточками
+var filter = document.querySelector('.map__filters-container');
+
+//  вставляю набор объявлений в разметку, в блок с классом '.map'
+similarListElement.insertBefore(fragment, filter);
