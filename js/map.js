@@ -12,7 +12,7 @@ var photosQuantity = 3;
 var APPARTMENTS_QUANTITY = 8;
 
 //  создаю функцию, генерирующую массив с адресами изображений
-var createImages = function(imageQuantity) {
+var createImages = function (imageQuantity) {
   for (var i = 1; i <= imageQuantity; i++) {
     var image_i = 'img/avatars/' + 'user0' + i + '.png';
     AVATARS.push(image_i);
@@ -21,7 +21,7 @@ var createImages = function(imageQuantity) {
 createImages(avatarsQuantity);
 
 //  создаю функцию, генерирующую массив с изображений помещений
-var createPhotos = function(imageQuantity) {
+var createPhotos = function (imageQuantity) {
   for (var i = 1; i <= imageQuantity; i++) {
     var image_i = 'http://o0.github.io/assets/images/tokyo/hotel' + i + '.jpg';
     PHOTOS.push(image_i);
@@ -57,7 +57,7 @@ var createAppartments = function (appartmentsQuantity) {
         'guests': getRandomInteger(1, 5), //  случайное кол-во гостей для размещения взял самостоятельно от 1 до 5
         'checkin': CHECK_TIMES[getRandomInteger(0, 2)],
         'checkout': CHECK_TIMES[getRandomInteger(0, 2)],
-        'features': FEATURES_TYPES.length=getRandomInteger(1, 6),
+        'features': FEATURES_TYPES.slice(getRandomInteger(0, 5), getRandomInteger(0, 5)),
         'description': ' ',
         'photos': PHOTOS.sort(compareRandom)
       },
@@ -69,18 +69,14 @@ var createAppartments = function (appartmentsQuantity) {
     appartments.push(appartment);
   }
 };
-//создаю массив объектов с жильём
+//  создаю массив объектов с жильём
 createAppartments(APPARTMENTS_QUANTITY);
 
 //  у блока .map убираю класс .map--faded
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-
-
-
-
-//-----------------------------------Задание №3----------------------------------------------------
+//  -----------------------------------Задание №3----------------------------------------------------
 
 //  3. Создаю метки
 //  нахожу место в разметке, куда буду вставлять похожие друг на друга метки на карте
@@ -94,8 +90,8 @@ var renderPin = function (appartment) {
 
   pinElement.style.left = appartment.location.x + 'px';
   pinElement.style.top = appartment.location.y + 'px';
-  pinElement.children[0].src = appartment.author;
-  pinElement.children[0].alt = appartment.offer.title;
+  pinElement.querySelector('img').src = appartment.author;
+  pinElement.querySelector('img').alt = appartment.offer.title;
 
   return pinElement;
 };
@@ -108,8 +104,6 @@ for (var i = 0; i < appartments.length; i++) {
 
 //  вставляю набор меток в разметку, в блок с классом '.map__pins'
 similarListElement.appendChild(fragment);
-
-
 
 //-----------------------------------Задание №5----------------------------------------------------
 
@@ -125,20 +119,17 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + 'Р/ночь';
   cardElement.querySelector('.popup__type').textContent = appartment.offer.type;
-  cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.quests + ' гостей';
-  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + 'appartment.offer.checkout';
+  cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
   cardElement.querySelector('.popup__features').textContent = appartment.offer.features;
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
-  // cardElement.querySelector('.popup__photos').textContent = appartment.offer.description;
+  cardElement.querySelector('.popup__photos').querySelector('img').src = appartment.offer.photos[getRandomInteger(0, 2)];
 
-  return renderCard;
+  return cardElement;
 };
 
 // создаю 1 объявление по шаблону
 var promoCard = renderCard(appartments[0]);
-
-//  нахожу блок, в который буду вставлять обяъвление
-var map = document.querySelector('.map');
 
 //  нахожу блок фильтра, перед которым буду вставлять объявление
 var filter = document.querySelector('.map__filters-container');
