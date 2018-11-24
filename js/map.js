@@ -72,8 +72,6 @@ var createAppartments = function (appartmentsQuantity) {
 //создаю массив объектов с жильём
 createAppartments(APPARTMENTS_QUANTITY);
 
-
-
 //  у блока .map убираю класс .map--faded
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
@@ -113,10 +111,9 @@ similarListElement.appendChild(fragment);
 
 
 
+//-----------------------------------Задание №5----------------------------------------------------
 
 //  5. Создаю карточки объявлений
-//  нахожу место в разметке, куда буду вставлять карточки объявлений на карте
-var similarListElement = document.querySelector('.map');
 //  нахожу шаблон, по которому буду создавать карточку обяъвления
 var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
@@ -137,14 +134,14 @@ var renderCard = function (appartment) {
   return renderCard;
 };
 
-// создаю набор объявлений по шаблону
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < appartments.length; i++) {
-  fragment.appendChild(renderCard(appartments[i]));
-}
+// создаю 1 объявление по шаблону
+var promoCard = renderCard(appartments[0]);
 
-//  нахожу блок фильтра, перед которым буду вставлять fragment с карточками
+//  нахожу блок, в который буду вставлять обяъвление
+var map = document.querySelector('.map');
+
+//  нахожу блок фильтра, перед которым буду вставлять объявление
 var filter = document.querySelector('.map__filters-container');
 
-//  вставляю набор объявлений в разметку, в блок с классом '.map'
-similarListElement.insertBefore(fragment, filter);
+//  вставляю объявление в разметку, в блок с классом '.map'
+map.insertBefore(promoCard, filter);
