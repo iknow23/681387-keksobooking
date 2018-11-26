@@ -4,7 +4,20 @@
 var AVATARS = [];
 var avatarsQuantity = 8;
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var APPARTMENT_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var APPARTMENT_TYPES = [
+  {
+    name : 'квартира'
+  },
+  {
+    name : 'бунгало'
+  },
+  {
+    name : 'дом'
+  },
+  {
+    name : 'дворец'
+  }
+];
 var CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES_TYPES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = [];
@@ -14,8 +27,8 @@ var APPARTMENTS_QUANTITY = 8;
 //  создаю функцию, генерирующую массив с адресами изображений
 var createImages = function (imageQuantity) {
   for (var i = 1; i <= imageQuantity; i++) {
-    var image_i = 'img/avatars/' + 'user0' + i + '.png';
-    AVATARS.push(image_i);
+    var image = 'img/avatars/' + 'user0' + i + '.png';
+    AVATARS.push(image);
   }
 };
 createImages(avatarsQuantity);
@@ -23,8 +36,8 @@ createImages(avatarsQuantity);
 //  создаю функцию, генерирующую массив с изображений помещений
 var createPhotos = function (imageQuantity) {
   for (var i = 1; i <= imageQuantity; i++) {
-    var image_i = 'http://o0.github.io/assets/images/tokyo/hotel' + i + '.jpg';
-    PHOTOS.push(image_i);
+    var image = 'http://o0.github.io/assets/images/tokyo/hotel' + i + '.jpg';
+    PHOTOS.push(image);
   }
 };
 createPhotos(photosQuantity);
@@ -52,7 +65,7 @@ var createAppartments = function (appartmentsQuantity) {
         'title': TITLES[i],
         'address': getRandomInteger(1, 1000) + ' ' + getRandomInteger(130, 630),
         'price': getRandomInteger(1000, 1000000),
-        'type': APPARTMENT_TYPES[getRandomInteger(0, 3)],
+        'type': APPARTMENT_TYPES[getRandomInteger(0, 3)].name,
         'rooms': getRandomInteger(1, 5),
         'guests': getRandomInteger(1, 5), //  случайное кол-во гостей для размещения взял самостоятельно от 1 до 5
         'checkin': CHECK_TIMES[getRandomInteger(0, 2)],
@@ -117,7 +130,7 @@ var renderCard = function (appartment) {
 
   cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + 'Р/ночь';
+  cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
   cardElement.querySelector('.popup__type').textContent = appartment.offer.type;
   cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
