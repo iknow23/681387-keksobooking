@@ -4,6 +4,7 @@
 var AVATARS = [];
 var avatarsQuantity = 8;
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+var ADRESS = [];
 var APPARTMENT_TYPES = [
   {
     name : 'квартира'
@@ -42,6 +43,19 @@ var createPhotos = function (imageQuantity) {
 };
 createPhotos(photosQuantity);
 
+//  создаю функцию, генерирующую массив с координатами меток
+var createLocations = function (pinQuantity) {
+  for (var i = 1; i <= pinQuantity; i++) {
+    var location = {
+      'x': getRandomInteger(1, 1200),
+      'y': getRandomInteger(130, 630)
+    }
+    ADRESS.push(location);
+  }
+};
+createLocations(8);
+console.log(ADRESS);
+
 //  создаю функцию для поиска случайного числа в пределах max,min значений
 function getRandomInteger(min, max) {
   var rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -63,7 +77,7 @@ var createAppartments = function (appartmentsQuantity) {
       'author': AVATARS[i],
       'offer': {
         'title': TITLES[i],
-        'address': getRandomInteger(1, 1000) + ' ' + getRandomInteger(130, 630),
+        'address': ADRESS[i].x + ' ' + ADRESS[i].y,
         'price': getRandomInteger(1000, 1000000),
         'type': APPARTMENT_TYPES[getRandomInteger(0, 3)].name,
         'rooms': getRandomInteger(1, 5),
@@ -75,8 +89,8 @@ var createAppartments = function (appartmentsQuantity) {
         'photos': PHOTOS.sort(compareRandom)
       },
       'location': {
-        'x': getRandomInteger(1, 1200),
-        'y': getRandomInteger(130, 630)
+        'x': ADRESS[i].x,
+        'y': ADRESS[i].y
       }
     };
     appartments.push(appartment);
