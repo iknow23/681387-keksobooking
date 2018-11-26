@@ -1,38 +1,22 @@
 'use strict';
 
 //  константы
+var APPARTMENTS_QUANTITY = 8; //  количество жилых помещений
 var AVATARS = [];
 var avatarsQuantity = 8;
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var ADRESS = [];
-var APPARTMENT_TYPES = [
-  {
-    name : 'Квартира'
-  },
-  {
-    name : 'Бунгало'
-  },
-  {
-    name : 'Дом'
-  },
-  {
-    name : 'Дворец'
-  }
-];
+var APPARTMENT_TYPES = {
+    flat : 'Квартира',
+    bungalo : 'Бунгало',
+    house : 'Дом',
+    palace : 'Дворец'
+  };
 var CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES_TYPES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = [];
 var photosQuantity = 3;
-var APPARTMENTS_QUANTITY = 8;
 
-//  создаю функцию, генерирующую массив с адресами изображений
-var createImages = function (imageQuantity) {
-  for (var i = 1; i <= imageQuantity; i++) {
-    var image = 'img/avatars/' + 'user0' + i + '.png';
-    AVATARS.push(image);
-  }
-};
-createImages(avatarsQuantity);
+
 
 //  создаю функцию, генерирующую массив с изображений помещений
 var createPhotos = function (imageQuantity) {
@@ -42,18 +26,9 @@ var createPhotos = function (imageQuantity) {
   }
 };
 createPhotos(photosQuantity);
+console.log(PHOTOS);
 
-//  создаю функцию, генерирующую массив с координатами меток
-var createLocations = function (pinQuantity) {
-  for (var i = 1; i <= pinQuantity; i++) {
-    var location = {
-      'x': getRandomInteger(1, 1200),
-      'y': getRandomInteger(130, 630)
-    }
-    ADRESS.push(location);
-  }
-};
-createLocations(8);
+
 
 //  создаю функцию для поиска случайного числа в пределах max,min значений
 function getRandomInteger(min, max) {
@@ -62,34 +37,38 @@ function getRandomInteger(min, max) {
   return rand;
 }
 
-//  создаю функцию для перемешивания массива в случайном порядке
-function compareRandom(a, b) {
-  return Math.random() - 0.5;
-}
+// //  создаю функцию для перемешивания массива в случайном порядке
+// function compareRandom(a, b) {
+//   return Math.random() - 0.5;
+// }
 
 //  создаю массив из 8 объектов (описание жилых помещений)
 var appartments = [];
 
 var createAppartments = function (appartmentsQuantity) {
-  for (var i = 0; i <= 7; i++) {
+  for (var i = 0; i < 8; i++) {
+    var location = {
+      'x': getRandomInteger(1, 1200),
+      'y': getRandomInteger(130, 630)
+    }
     var appartment = {
-      'author': AVATARS[i],
+      'author': 'img/avatars/' + 'user0' + (i + 1) + '.png',
       'offer': {
         'title': TITLES[i],
-        'address': ADRESS[i].x + ' ' + ADRESS[i].y,
+        'address': location.x + ', ' + location.y,
         'price': getRandomInteger(1000, 1000000),
-        'type': APPARTMENT_TYPES[getRandomInteger(0, 3)].name,
+        'type': 'flat',
         'rooms': getRandomInteger(1, 5),
         'guests': getRandomInteger(1, 5), //  случайное кол-во гостей для размещения взял самостоятельно от 1 до 5
         'checkin': CHECK_TIMES[getRandomInteger(0, 2)],
         'checkout': CHECK_TIMES[getRandomInteger(0, 2)],
         'features': FEATURES_TYPES.slice(getRandomInteger(0, 5), getRandomInteger(0, 5)),
         'description': ' ',
-        'photos': PHOTOS.sort(compareRandom)
+        'photos': PHOTOS
       },
       'location': {
-        'x': ADRESS[i].x,
-        'y': ADRESS[i].y
+        'x': location.x,
+        'y': location.y
       }
     };
     appartments.push(appartment);
@@ -144,12 +123,18 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = appartment.offer.type;
+  cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
-  cardElement.querySelector('.popup__features').textContent = appartment.offer.features;
+  cardElement.querySelector('.popup__features').querySelector('.popup__feature').classList.add('.popup__feature--wifi');
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
-  cardElement.querySelector('.popup__photos').querySelector('img').src = appartment.offer.photos[getRandomInteger(0, 2)];
+  for (var i = 0; i < PHOTOS.length; i++) {
+    var element = document.createElement('img');
+    element.className = 'popup__photo';
+    element.src = appartment.offer.photos[i];
+    cardElement.querySelector('.popup__photos').appendChild(element);
+    cardElement.querySelector('.popup__photos').querySelector('img').src = appartment.offer.photos[i];
+  }
 
   return cardElement;
 };
