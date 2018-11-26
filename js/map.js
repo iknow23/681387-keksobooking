@@ -7,16 +7,16 @@ var TITLES = ['Большая уютная квартира', 'Маленька�
 var ADRESS = [];
 var APPARTMENT_TYPES = [
   {
-    name : 'квартира'
+    name : 'Квартира'
   },
   {
-    name : 'бунгало'
+    name : 'Бунгало'
   },
   {
-    name : 'дом'
+    name : 'Дом'
   },
   {
-    name : 'дворец'
+    name : 'Дворец'
   }
 ];
 var CHECK_TIMES = ['12:00', '13:00', '14:00'];
@@ -54,7 +54,6 @@ var createLocations = function (pinQuantity) {
   }
 };
 createLocations(8);
-console.log(ADRESS);
 
 //  создаю функцию для поиска случайного числа в пределах max,min значений
 function getRandomInteger(min, max) {
