@@ -60,6 +60,7 @@ var createAppartments = function (appartmentsQuantity) {
       }
     };
     appartments.push(appartment);
+    console.log(appartment.offer.features.length);
   }
 };
 
@@ -113,16 +114,21 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
-  cardElement.querySelector('.popup__features').querySelector('.popup__feature').classList.add('popup__feature--' + appartment.offer.features[0]);
+  
+  
+  for (var i = 0; i < appartment.offer.features.length; i++) {
+    var element = document.createElement('li');
+    element.className = 'popup__feature popup__feature--' + appartment.offer.features[i];
+    cardElement.querySelector('.popup__features').appendChild(element);
+  }
+
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
   for (var i = 0; i < PHOTOS.length; i++) {
-    // var replaceImg = cardElement.querySelector('.popup__photos').querySelector('img');
     var element = document.createElement('img');
     element.className = 'popup__photo';
     element.src = appartment.offer.photos[i];
     element.width = 45;
     element.height = 40;
-    // cardElement.querySelector('.popup__photos').replaceChild(element, replaceImg);
     cardElement.querySelector('.popup__photos').appendChild(element);
     cardElement.querySelector('.popup__photos').querySelector('img').src = appartment.offer.photos[i];
   }
