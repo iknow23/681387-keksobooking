@@ -13,6 +13,13 @@ var CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES_TYPES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = [];
 var photosQuantity = 3;
+var minCoordinateX = 1;
+var maxCoordinateX = 1200;
+var minCoordinateY = 130;
+var maxCoordinateY = 630;
+var minPrice = 1000;
+var maxPrice = 1000000;
+
 
 //  создаю функцию, генерирующую массив с изображений помещений
 var createPhotos = function (imageQuantity) {
@@ -34,18 +41,18 @@ function getRandomInteger(min, max) {
 var appartments = [];
 
 var createAppartments = function (appartmentsQuantity) {
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < appartmentsQuantity; i++) {
     var location = {
-      'x': getRandomInteger(1, 1200),
-      'y': getRandomInteger(130, 630)
+      'x': getRandomInteger(minCoordinateX, maxCoordinateX),
+      'y': getRandomInteger(minCoordinateY, maxCoordinateY)
     }
     var appartment = {
-      'author': 'img/avatars/' + 'user0' + (i + 1) + '.png',
+      'author': 'img/avatars/user0' + (i + 1) + '.png',
       'offer': {
         'title': TITLES[i],
         'address': location.x + ', ' + location.y,
-        'price': getRandomInteger(1000, 1000000),
-        'type': 'flat',
+        'price': getRandomInteger(minPrice, maxPrice),
+        'type': APPARTMENT_TYPES['flat'],
         'rooms': getRandomInteger(1, 5),
         'guests': getRandomInteger(1, 5), //  случайное кол-во гостей для размещения взял самостоятельно от 1 до 5
         'checkin': CHECK_TIMES[getRandomInteger(0, 2)],
@@ -60,7 +67,7 @@ var createAppartments = function (appartmentsQuantity) {
       }
     };
     appartments.push(appartment);
-    console.log(appartment.offer.features.length);
+    console.log(appartment.offer.type);
   }
 };
 
@@ -111,11 +118,11 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
+  cardElement.querySelector('.popup__type').textContent = appartment.offer.type;
   cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
-  
-  
+
+  cardElement.querySelector('.popup__features').innerHTML = '';
   for (var i = 0; i < appartment.offer.features.length; i++) {
     var element = document.createElement('li');
     element.className = 'popup__feature popup__feature--' + appartment.offer.features[i];
@@ -123,6 +130,8 @@ var renderCard = function (appartment) {
   }
 
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
+
+  cardElement.querySelector('.popup__photos').innerHTML = '';
   for (var i = 0; i < PHOTOS.length; i++) {
     var element = document.createElement('img');
     element.className = 'popup__photo';
