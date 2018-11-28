@@ -99,7 +99,7 @@ for (var i = 0; i < appartments.length; i++) {
 }
 
 //  вставляю набор меток в разметку, в блок с классом '.map__pins'
-//similarListElement.appendChild(fragment);
+similarListElement.appendChild(fragment);
 
 //  Создаю карточку объявления
 //  нахожу шаблон, по которому буду создавать карточку обяъвления
@@ -147,7 +147,6 @@ var filter = document.querySelector('.map__filters-container');
 
 //  вставляю объявление в разметку, в блок с классом '.map'
 var map = document.querySelector('.map');
-//map.insertBefore(promoCard, filter);
 
 
 
@@ -157,10 +156,11 @@ var map = document.querySelector('.map');
 
 
 
+//  Задание 1. Активация страницы
 
 //  отключаю все элементы ввода формы
 var formElements = document.querySelectorAll('fieldset');
-console.log(formElements);
+
 for (var i = 0; i < formElements.length; i++) {
   formElements[i].disabled = true;
 }
@@ -169,10 +169,18 @@ for (var i = 0; i < formElements.length; i++) {
 //  перевожу карту в активное состояния
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
-mainPin.addEventListener('click', function() {
+mainPin.addEventListener('mouseup', function() {
   map.classList.remove('map--faded');
   mainForm.classList.remove('ad-form--disabled');
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = false;
   }
 })
+
+//  Задание 2. Заполнение поля адреса
+
+//  Задание 3. Просмотр подробной информации о похожих объявлениях
+var pin = document.querySelectorAll('.map__pin')[1];
+pin.addEventListener('click', function() {
+  map.insertBefore(promoCard, filter);
+});
