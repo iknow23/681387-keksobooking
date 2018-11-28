@@ -148,16 +148,8 @@ var filter = document.querySelector('.map__filters-container');
 //  код вставки на строке 190
 var map = document.querySelector('.map');
 
-
-
-
-
-
-
-
-
+//  -------------------------------------------------------------------------------------------------
 //  Задание 1. Активация страницы
-
 //  отключаю все элементы ввода формы
 var formElements = document.querySelectorAll('fieldset');
 
@@ -169,6 +161,7 @@ for (var i = 0; i < formElements.length; i++) {
 //  перевожу карту в активное состояния
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
+
 mainPin.addEventListener('mouseup', function() {
   map.classList.remove('map--faded');
   mainForm.classList.remove('ad-form--disabled');
@@ -179,6 +172,10 @@ mainPin.addEventListener('mouseup', function() {
 })
 
 //  Задание 2. Заполнение поля адреса
+//  нахожу поле ввода
+var inputAdress = document.querySelector('#address');
+//  заполняю через DOM значение value у input
+inputAdress.value = mainPin.style.left + ' ' + mainPin.style.top;
 
 //  Задание 3. Просмотр подробной информации о похожих объявлениях
 //  нахожу метки, по которым буду отлавливать нажатия для того, чтобы выводить карточку объявления
