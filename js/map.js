@@ -21,7 +21,6 @@ var maxCoordinateY = 630;
 var minPrice = 1000;
 var maxPrice = 1000000;
 
-
 //  создаю функцию, генерирующую массив с изображений помещений
 var createPhotos = function (imageQuantity) {
   for (var i = 0; i < imageQuantity; i++) {
@@ -68,18 +67,12 @@ var createAppartments = function (appartmentsQuantity) {
       }
     };
     appartments.push(appartment);
-    console.log(appartment.offer.type);
   }
 };
-
-console.log(appartments);
 
 //  создаю массив объектов с жильём
 createAppartments(APPARTMENTS_QUANTITY);
 
-//  у блока .map убираю класс .map--faded
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 
 //  Создаю метки объявлений
 //  нахожу место в разметке, куда буду вставлять похожие друг на друга метки на карте
@@ -106,7 +99,7 @@ for (var i = 0; i < appartments.length; i++) {
 }
 
 //  вставляю набор меток в разметку, в блок с классом '.map__pins'
-similarListElement.appendChild(fragment);
+//similarListElement.appendChild(fragment);
 
 //  Создаю карточку объявления
 //  нахожу шаблон, по которому буду создавать карточку обяъвления
@@ -153,4 +146,33 @@ var promoCard = renderCard(appartments[0]);
 var filter = document.querySelector('.map__filters-container');
 
 //  вставляю объявление в разметку, в блок с классом '.map'
-map.insertBefore(promoCard, filter);
+var map = document.querySelector('.map');
+//map.insertBefore(promoCard, filter);
+
+
+
+
+
+
+
+
+
+
+//  отключаю все элементы ввода формы
+var formElements = document.querySelectorAll('fieldset');
+console.log(formElements);
+for (var i = 0; i < formElements.length; i++) {
+  formElements[i].disabled = true;
+}
+
+//  у блока .map убираю класс .map--faded при нажатии на главную метку
+//  перевожу карту в активное состояния
+var mainPin = document.querySelector('.map__pin--main');
+var mainForm = document.querySelector('.ad-form');
+mainPin.addEventListener('click', function() {
+  map.classList.remove('map--faded');
+  mainForm.classList.remove('ad-form--disabled');
+  for (var i = 0; i < formElements.length; i++) {
+    formElements[i].disabled = false;
+  }
+})
