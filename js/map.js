@@ -5,11 +5,11 @@ var APPARTMENTS_QUANTITY = 8; //  количество объявлений
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var OFFER_TYPES = ['flat', 'bungalo', 'house', 'palace'];
 var APPARTMENT_TYPES = {
-    flat : 'Квартира',
-    bungalo : 'Бунгало',
-    house : 'Дом',
-    palace : 'Дворец'
-  };
+  flat: 'Квартира',
+  bungalo: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец'
+};
 var CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES_TYPES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = [];
@@ -24,7 +24,7 @@ var maxPrice = 1000000;
 //  создаю функцию, генерирующую массив с изображений помещений
 var createPhotos = function (imageQuantity) {
   for (var i = 0; i < imageQuantity; i++) {
-    var image = 'http://o0.github.io/assets/images/tokyo/hotel' + (i+1) + '.jpg';
+    var image = 'http://o0.github.io/assets/images/tokyo/hotel' + (i + 1) + '.jpg';
     PHOTOS.push(image);
   }
 };
@@ -45,7 +45,7 @@ var createAppartments = function (appartmentsQuantity) {
     var location = {
       'x': getRandomInteger(minCoordinateX, maxCoordinateX),
       'y': getRandomInteger(minCoordinateY, maxCoordinateY)
-    }
+    };
     var appartment = {
       'author': 'img/avatars/user0' + (i + 1) + '.png',
       'offer': {
@@ -116,22 +116,22 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
 
   cardElement.querySelector('.popup__features').innerHTML = '';
-  for (var i = 0; i < appartment.offer.features.length; i++) {
-    var element = document.createElement('li');
-    element.className = 'popup__feature popup__feature--' + appartment.offer.features[i];
-    cardElement.querySelector('.popup__features').appendChild(element);
+  for (var j = 0; j < appartment.offer.features.length; j++) {
+    var elementLi = document.createElement('li');
+    elementLi.className = 'popup__feature popup__feature--' + appartment.offer.features[j];
+    cardElement.querySelector('.popup__features').appendChild(elementLi);
   }
 
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
 
   cardElement.querySelector('.popup__photos').innerHTML = '';
   for (var i = 0; i < PHOTOS.length; i++) {
-    var element = document.createElement('img');
-    element.className = 'popup__photo';
-    element.src = appartment.offer.photos[i];
-    element.width = 45;
-    element.height = 40;
-    cardElement.querySelector('.popup__photos').appendChild(element);
+    var elementImg = document.createElement('img');
+    elementImg.className = 'popup__photo';
+    elementImg.src = appartment.offer.photos[i];
+    elementImg.width = 45;
+    elementImg.height = 40;
+    cardElement.querySelector('.popup__photos').appendChild(elementImg);
     cardElement.querySelector('.popup__photos').querySelector('img').src = appartment.offer.photos[i];
   }
 
@@ -153,8 +153,8 @@ var map = document.querySelector('.map');
 //  отключаю все элементы ввода формы
 var formElements = document.querySelectorAll('fieldset');
 
-for (var i = 0; i < formElements.length; i++) {
-  formElements[i].disabled = true;
+for (var j = 0; j < formElements.length; j++) {
+  formElements[j].disabled = true;
 }
 
 //  у блока .map убираю класс .map--faded при нажатии на главную метку
@@ -162,14 +162,14 @@ for (var i = 0; i < formElements.length; i++) {
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
 
-mainPin.addEventListener('mouseup', function() {
+mainPin.addEventListener('mouseup', function () {
   map.classList.remove('map--faded');
   mainForm.classList.remove('ad-form--disabled');
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = false;
-  };
+  }
   similarListElement.appendChild(fragment);
-})
+});
 
 //  Задание 2. Заполнение поля адреса
 //  нахожу поле ввода
@@ -190,4 +190,4 @@ var addPinsClickHandler = function (pin, card) {
 
 for (var i = 0; i < pins.length; i++) {
   addPinsClickHandler(pins[i], promoCard);
-};
+}
