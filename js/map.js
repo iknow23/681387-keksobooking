@@ -73,7 +73,6 @@ var createAppartments = function (appartmentsQuantity) {
 //  создаю массив объектов с жильём
 createAppartments(APPARTMENTS_QUANTITY);
 
-
 //  Создаю метки объявлений
 //  нахожу место в разметке, куда буду вставлять похожие друг на друга метки на карте
 var similarListElement = document.querySelector('.map__pins');
@@ -99,7 +98,7 @@ for (var i = 0; i < appartments.length; i++) {
 }
 
 //  вставляю набор меток в разметку, в блок с классом '.map__pins'
-similarListElement.appendChild(fragment);
+//  код вставки на строке 177
 
 //  Создаю карточку объявления
 //  нахожу шаблон, по которому буду создавать карточку обяъвления
@@ -139,13 +138,14 @@ var renderCard = function (appartment) {
   return cardElement;
 };
 
-// создаю 1 карточку объявления по шаблону
+//  создаю 1 карточку объявления по шаблону
 var promoCard = renderCard(appartments[0]);
 
 //  нахожу блок фильтра, перед которым буду вставлять объявление
 var filter = document.querySelector('.map__filters-container');
 
 //  вставляю объявление в разметку, в блок с классом '.map'
+//  код вставки на строке 190
 var map = document.querySelector('.map');
 
 
@@ -174,13 +174,23 @@ mainPin.addEventListener('mouseup', function() {
   mainForm.classList.remove('ad-form--disabled');
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = false;
-  }
+  };
+  similarListElement.appendChild(fragment);
 })
 
 //  Задание 2. Заполнение поля адреса
 
 //  Задание 3. Просмотр подробной информации о похожих объявлениях
-var pin = document.querySelectorAll('.map__pin')[1];
-pin.addEventListener('click', function() {
-  map.insertBefore(promoCard, filter);
-});
+//  нахожу метки, по которым буду отлавливать нажатия для того, чтобы выводить карточку объявления
+var pins = fragment.querySelectorAll('.map__pin');
+//  promoCard - карта в 1 экземпляре, которая отображается для всех меток
+
+var addPinsClickHandler = function (pin, card) {
+  pin.addEventListener('click', function () {
+    map.insertBefore(promoCard, filter);
+  });
+};
+
+for (var i = 0; i < pins.length; i++) {
+  addPinsClickHandler(pins[i], promoCard);
+};
