@@ -3,6 +3,7 @@
 //  константы
 var APPARTMENTS_QUANTITY = 8; //  количество объявлений
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+var OFFER_TYPES = ['flat', 'bungalo', 'house', 'palace'];
 var APPARTMENT_TYPES = {
     flat : 'Квартира',
     bungalo : 'Бунгало',
@@ -52,7 +53,7 @@ var createAppartments = function (appartmentsQuantity) {
         'title': TITLES[i],
         'address': location.x + ', ' + location.y,
         'price': getRandomInteger(minPrice, maxPrice),
-        'type': APPARTMENT_TYPES['flat'],
+        'type': OFFER_TYPES[getRandomInteger(0, 3)],
         'rooms': getRandomInteger(1, 5),
         'guests': getRandomInteger(1, 5), //  случайное кол-во гостей для размещения взял самостоятельно от 1 до 5
         'checkin': CHECK_TIMES[getRandomInteger(0, 2)],
@@ -118,7 +119,7 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = appartment.offer.type;
+  cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
 
