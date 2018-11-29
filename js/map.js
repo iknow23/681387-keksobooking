@@ -185,6 +185,25 @@ var pins = fragment.querySelectorAll('.map__pin');
 var addPinsClickHandler = function (pin, card) {
   pin.addEventListener('click', function () {
     map.insertBefore(promoCard, filter);
+
+    //  Теперь, при открывшейся карточке объявления (внутри данного обработчика) буду скрывать эту самую карточку
+    //  Закрываю карточку с объявлением
+    var mapCard = document.querySelector('.map__card');
+    var popupCloseButton = document.querySelector('.popup__close');
+    //  пишу функцию открытия/закрытия карточки объвления
+    var popupClose = function () {
+      mapCard.style.display = 'none';
+    };
+    //  применяю функцию закрытия к обработчикам событий
+    popupCloseButton.addEventListener('click', function () {
+      popupClose();
+    });
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 27) {
+        popupClose();
+      }
+    });
+
   });
 };
 
