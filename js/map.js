@@ -1,6 +1,5 @@
 'use strict';
 
-//  константы
 var APPARTMENTS_QUANTITY = 8; //  количество объявлений
 var TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var OFFER_TYPES = ['flat', 'bungalo', 'house', 'palace'];
@@ -57,7 +56,7 @@ var createAppartments = function (appartmentsQuantity) {
         'guests': getRandomInteger(1, 5), //  случайное кол-во гостей для размещения взял самостоятельно от 1 до 5
         'checkin': CHECK_TIMES[getRandomInteger(0, 2)],
         'checkout': CHECK_TIMES[getRandomInteger(0, 2)],
-        'features': FEATURES_TYPES.slice(getRandomInteger(0, 5), getRandomInteger(0, 5)),
+        'features': FEATURES_TYPES.slice(getRandomInteger(0, 2), getRandomInteger(3, 5)),
         'description': ' ',
         'photos': PHOTOS
       },
@@ -69,45 +68,41 @@ var createAppartments = function (appartmentsQuantity) {
     appartments.push(appartment);
   }
 };
-
-//  создаю массив объектов с жильём
 createAppartments(APPARTMENTS_QUANTITY);
 
 //  Создаю метки объявлений
-//  нахожу место в разметке, куда буду вставлять похожие друг на друга метки на карте
 var similarListElement = document.querySelector('.map__pins');
-//  нахожу шаблон, по которому буду создавать метку
 var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-//  пишу функцию для генерирования метки в соответствии с шаблоном
-var renderPin = function (appartment) {
+var renderPin = function (appartment, index) {
   var pinElement = similarPinTemplate.cloneNode(true);
 
   pinElement.style.left = appartment.location.x + 'px';
   pinElement.style.top = appartment.location.y + 'px';
   pinElement.querySelector('img').src = appartment.author;
   pinElement.querySelector('img').alt = appartment.offer.title;
+  pinElement.setAttribute('data-id', index);
 
   return pinElement;
 };
 
-// создаю набор меток по шаблону
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < appartments.length; i++) {
-  fragment.appendChild(renderPin(appartments[i]));
+  fragment.appendChild(renderPin(appartments[i], i));
 }
 
-//  вставляю набор меток в разметку, в блок с классом '.map__pins'
-//  код вставки на строке 177
-
 //  Создаю карточку объявления
-//  нахожу шаблон, по которому буду создавать карточку обяъвления
 var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-//  пишу функцию для генерирования карточки объявления в соответствии с шаблоном
+/**
+ * Генерация карточки объявления
+ * @param {Object} appartment
+ * @return {HTMLDomNode}
+ */
 var renderCard = function (appartment) {
   var cardElement = similarCardTemplate.cloneNode(true);
 
+  cardElement.querySelector('.popup__avatar').src = appartment.author;
   cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
@@ -138,19 +133,10 @@ var renderCard = function (appartment) {
   return cardElement;
 };
 
-//  создаю 1 карточку объявления по шаблону
-var promoCard = renderCard(appartments[0]);
-
-//  нахожу блок фильтра, перед которым буду вставлять объявление
 var filter = document.querySelector('.map__filters-container');
-
-//  вставляю объявление в разметку, в блок с классом '.map'
-//  код вставки на строке 190
 var map = document.querySelector('.map');
 
-//  -------------------------------------------------------------------------------------------------
-//  Задание 1. Активация страницы
-//  отключаю все элементы ввода формы
+//  Активация страницы, отключаю все элементы ввода формы
 var formElements = document.querySelectorAll('fieldset');
 
 for (var j = 0; j < formElements.length; j++) {
@@ -162,51 +148,69 @@ for (var j = 0; j < formElements.length; j++) {
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
 
-mainPin.addEventListener('mouseup', function () {
+/**
+ * Активация карты на нажатие на главную метку
+ */
+ var mapStart = function () {
   map.classList.remove('map--faded');
   mainForm.classList.remove('ad-form--disabled');
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = false;
   }
   similarListElement.appendChild(fragment);
-});
 
-//  Задание 2. Заполнение поля адреса
-//  нахожу поле ввода
-var inputAdress = document.querySelector('#address');
-//  заполняю через DOM значение value у input
-inputAdress.value = mainPin.style.left + ' ' + mainPin.style.top;
+  var inputAdress = document.querySelector('#address');
+  inputAdress.value = mainPin.style.left.slice(0, 3) + ', ' + mainPin.style.top.slice(0, 3);
 
-//  Задание 3. Просмотр подробной информации о похожих объявлениях
-//  нахожу метки, по которым буду отлавливать нажатия для того, чтобы выводить карточку объявления
-var pins = fragment.querySelectorAll('.map__pin');
-//  promoCard - карта в 1 экземпляре, которая отображается для всех меток
-
-var addPinsClickHandler = function (pin, card) {
-  pin.addEventListener('click', function () {
-    map.insertBefore(promoCard, filter);
-
-    //  Теперь, при открывшейся карточке объявления (внутри данного обработчика) буду скрывать эту самую карточку
-    //  Закрываю карточку с объявлением
-    var mapCard = document.querySelector('.map__card');
-    var popupCloseButton = document.querySelector('.popup__close');
-    //  пишу функцию открытия/закрытия карточки объвления
-    var popupClose = function () {
-      mapCard.style.display = 'none';
-    };
-    //  применяю функцию закрытия к обработчикам событий
-    popupCloseButton.addEventListener('click', function () {
-      popupClose();
-    });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === 27) {
-        popupClose();
-      }
-    });
-
-  });
+  addPinsClickHandler();
 };
 
-for (var i = 0; i < pins.length; i++) {
-  addPinsClickHandler(pins[i], promoCard);
+mainPin.addEventListener('mouseup', function () {
+  mapStart();
+});
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    mapStart();
+  }
+});
+
+//  Задание 3. Просмотр подробной информации о похожих объявлениях
+var pins = fragment.querySelectorAll('.map__pin');
+
+var deleteOpenedCard = function() {
+  var mapCard = document.querySelector('.map__card');
+  map.removeChild(mapCard);
+};
+
+var doCardJob = function(pinId) {
+  //  проверка наличия карточки
+  var elementAvailable = document.querySelector('.map__card');
+  if (elementAvailable) {
+    deleteOpenedCard();
+  }
+
+  var newCard = renderCard(appartments[pinId]);
+  map.insertBefore(newCard, filter);
 }
+
+var addPinsClickHandler = function() {
+  var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+  for (var i = 0; i < pinsList.length; i++) {
+    pinsList[i].addEventListener('click', function(evt) {
+      var button = evt.currentTarget;
+      var pinId = button.getAttribute('data-id');
+      doCardJob(pinId);
+
+      var popupCloseButton = document.querySelector('.popup__close');
+      popupCloseButton.addEventListener('click', function () {
+        deleteOpenedCard();
+      });
+      document.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === 27) {
+          deleteOpenedCard();
+        }
+      });
+    });
+  }
+};
