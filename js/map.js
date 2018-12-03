@@ -214,3 +214,92 @@ var addPinsClickHandler = function() {
     });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var selectOfRooms = document.querySelector('#room_number');
+var selectOfCapacities = document.querySelector('#capacity');
+var selectOfCapacitiesCollection = selectOfCapacities.querySelectorAll('option');
+console.log(selectOfCapacitiesCollection);
+
+//function resultOptionFirst() {
+//  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" disabled>для 2 гостей</option><option value="2" selected>для 1 гостя</option><option value="3" disabled>не для гостей</option>';
+//}
+//
+//function resultOptionSecond() {
+//  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" selected>для 2 гостей</option><option value="2">для 1 гостя</option><option value="3" disabled>не для гостей</option>';
+//}
+//
+//function resultOptionThird() {
+//  selectOfCapacities.innerHTML = '<option value="3" selected>для 3 гостей</option><option value="2">для 2 гостей</option><option value="2">для 1 гостя</option><option value="3" disabled>не для гостей</option>';
+//}
+//
+//function resultOptionFourth() {
+//  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" disabled>для 2 гостей</option><option value="2" disabled>для 1 гостя</option><option value="3" selected>не для гостей</option>';
+//}
+//
+//selectOfRooms.addEventListener('change', function (evt) {
+//  console.log('Event', evt);
+//  var options = selectOfRooms.querySelectorAll("option");
+//  if (selectOfRooms.value == "1") {
+//    resultOptionFirst();
+//  } else if (selectOfRooms.value == "2") {
+//      resultOptionSecond();
+//    } else if (selectOfRooms.value == "3") {
+//        resultOptionThird();
+//      } else if (selectOfRooms.value == "100") {
+//          resultOptionFourth();
+//        }
+//});
+
+selectOfRooms.addEventListener('change', function (evt) {
+  console.log('Event', evt);
+  var options = selectOfRooms.querySelectorAll("option");
+  if (selectOfRooms.value == "2") {
+    selectOfCapacitiesCollection[1].removeAttribute('disabled');
+  } else if (selectOfRooms.value == "3") {
+      selectOfCapacitiesCollection[0].removeAttribute('disabled');
+    } else if (selectOfRooms.value == "100") {
+        selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+        selectOfCapacitiesCollection[1].setAttribute('disabled', true);
+        selectOfCapacitiesCollection[2].setAttribute('disabled', true);
+        selectOfCapacitiesCollection[3].removeAttribute('disabled');
+      }
+});
+
+
+//  с таким вариантом, думается лучше удалить из разметки disabled
+//  и вставлять через управление DOM'ом
+//  selectOfcapacities.setAttribute('disabled');
+
+
+
+
+
+//  ещё вариант с нахождением клика на текущем элементе = currentTarget (либо evt.target)
+//selectOfRooms.addEventListener('change', function (evt) {
+//  console.log('Event', evt);
+//  var options = selectOfRooms.querySelectorAll("option");
+//  if (evt.currentTarget.value == "2") {
+//    selectOfCapacitiesCollection[1].removeAttribute('disabled');
+//  } else if (evt.currentTarget.value == "3") {
+//      selectOfCapacitiesCollection[0].removeAttribute('disabled');
+//    } else if (evt.currentTarget.value == "100") {
+//        selectOfCapacitiesCollection[0].setAttribute('disabled');
+//        selectOfCapacitiesCollection[1].setAttribute('disabled');
+//        selectOfCapacitiesCollection[2].setAttribute('disabled');
+//        selectOfCapacitiesCollection[3].removeAttribute('disabled');
+//      }
+//});
