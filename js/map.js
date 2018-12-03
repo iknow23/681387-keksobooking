@@ -175,7 +175,7 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-//  Задание 3. Просмотр подробной информации о похожих объявлениях
+//  просмотр подробной информации о похожих объявлениях
 var pins = fragment.querySelectorAll('.map__pin');
 
 var deleteOpenedCard = function() {
@@ -215,25 +215,32 @@ var addPinsClickHandler = function() {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//  изменяю элементы формы
 var selectOfRooms = document.querySelector('#room_number');
 var selectOfCapacities = document.querySelector('#capacity');
 var selectOfCapacitiesCollection = selectOfCapacities.querySelectorAll('option');
 console.log(selectOfCapacitiesCollection);
 
+selectOfRooms.addEventListener('change', function (evt) {
+  console.log('Event', evt);
+  var options = selectOfRooms.querySelectorAll("option");
+  if (selectOfRooms.value == "2") {
+    selectOfCapacitiesCollection[1].removeAttribute('disabled');
+  } else if (selectOfRooms.value == "3") {
+      selectOfCapacitiesCollection[0].removeAttribute('disabled');
+    } else if (selectOfRooms.value == "100") {
+        selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+        selectOfCapacitiesCollection[1].setAttribute('disabled', true);
+        selectOfCapacitiesCollection[2].setAttribute('disabled', true);
+        selectOfCapacitiesCollection[3].removeAttribute('disabled');
+      }
+});
+
+//  с таким вариантом, может лучше удалить из разметки disabled и вставлять через управление DOM'ом
+//  selectOfcapacities.setAttribute('disabled');
+
+
+//  ещё вариант кода
 //function resultOptionFirst() {
 //  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" disabled>для 2 гостей</option><option value="2" selected>для 1 гостя</option><option value="3" disabled>не для гостей</option>';
 //}
@@ -263,28 +270,6 @@ console.log(selectOfCapacitiesCollection);
 //          resultOptionFourth();
 //        }
 //});
-
-selectOfRooms.addEventListener('change', function (evt) {
-  console.log('Event', evt);
-  var options = selectOfRooms.querySelectorAll("option");
-  if (selectOfRooms.value == "2") {
-    selectOfCapacitiesCollection[1].removeAttribute('disabled');
-  } else if (selectOfRooms.value == "3") {
-      selectOfCapacitiesCollection[0].removeAttribute('disabled');
-    } else if (selectOfRooms.value == "100") {
-        selectOfCapacitiesCollection[0].setAttribute('disabled', true);
-        selectOfCapacitiesCollection[1].setAttribute('disabled', true);
-        selectOfCapacitiesCollection[2].setAttribute('disabled', true);
-        selectOfCapacitiesCollection[3].removeAttribute('disabled');
-      }
-});
-
-
-//  с таким вариантом, думается лучше удалить из разметки disabled
-//  и вставлять через управление DOM'ом
-//  selectOfcapacities.setAttribute('disabled');
-
-
 
 
 
