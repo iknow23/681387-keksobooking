@@ -19,6 +19,8 @@ var minCoordinateY = 130;
 var maxCoordinateY = 630;
 var minPrice = 1000;
 var maxPrice = 1000000;
+var ENTER = 13;
+var ESC = 27;
 
 //  создаю функцию, генерирующую массив с изображений помещений
 var createPhotos = function (imageQuantity) {
@@ -170,7 +172,7 @@ mainPin.addEventListener('mouseup', function () {
 });
 
 mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER) {
     mapStart();
   }
 });
@@ -207,7 +209,7 @@ var addPinsClickHandler = function() {
         deleteOpenedCard();
       });
       document.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === 27) {
+        if (evt.keyCode === ESC) {
           deleteOpenedCard();
         }
       });
@@ -224,16 +226,27 @@ console.log(selectOfCapacitiesCollection);
 selectOfRooms.addEventListener('change', function (evt) {
   console.log('Event', evt);
   var options = selectOfRooms.querySelectorAll("option");
-  if (selectOfRooms.value == "2") {
-    selectOfCapacitiesCollection[1].removeAttribute('disabled');
-  } else if (selectOfRooms.value == "3") {
-      selectOfCapacitiesCollection[0].removeAttribute('disabled');
-    } else if (selectOfRooms.value == "100") {
-        selectOfCapacitiesCollection[0].setAttribute('disabled', true);
-        selectOfCapacitiesCollection[1].setAttribute('disabled', true);
-        selectOfCapacitiesCollection[2].setAttribute('disabled', true);
-        selectOfCapacitiesCollection[3].removeAttribute('disabled');
-      }
+  if (selectOfRooms.value === "1") {
+    selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+	selectOfCapacitiesCollection[1].setAttribute('disabled', true);
+	selectOfCapacitiesCollection[2].removeAttribute('disabled');
+	selectOfCapacitiesCollection[3].setAttribute('disabled', true);
+	} else if (selectOfRooms.value === "2") {
+		selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+		selectOfCapacitiesCollection[1].removeAttribute('disabled');
+		selectOfCapacitiesCollection[2].removeAttribute('disabled');
+		selectOfCapacitiesCollection[3].setAttribute('disabled', true);
+		} else if (selectOfRooms.value === "3") {
+			selectOfCapacitiesCollection[0].removeAttribute('disabled');
+			selectOfCapacitiesCollection[2].removeAttribute('disabled');
+			selectOfCapacitiesCollection[1].removeAttribute('disabled');
+			selectOfCapacitiesCollection[3].setAttribute('disabled', true);
+			} else if (selectOfRooms.value === "100") {
+				selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+				selectOfCapacitiesCollection[1].setAttribute('disabled', true);
+				selectOfCapacitiesCollection[2].setAttribute('disabled', true);
+				selectOfCapacitiesCollection[3].removeAttribute('disabled');
+				}
 });
 
 //  с таким вариантом, может лучше удалить из разметки disabled и вставлять через управление DOM'ом
