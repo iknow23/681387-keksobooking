@@ -305,9 +305,61 @@ selectOfRooms.addEventListener('change', function (evt) {
 
 
 
-//  -----------------------------DRAG-N-DROP-----------------------
-(function () {
 
+
+
+
+
+//  -----------------------------DRAG-N-DROP-----------------------
+//  Вариант 1. Обычное перетаскивание
+
+//  var pinHandler = document.querySelector('.map__pin--main');
+//
+//  pinHandler.addEventListener('mousedown', function (evt) {
+//    evt.preventDefault();
+//
+//    var startCoords = {
+//      x: evt.clientX,
+//      y: evt.clientY
+//    };
+//
+//    var onMouseMove = function (moveEvt) {
+//      moveEvt.preventDefault();
+//
+//      var shift = {
+//        x: startCoords.x - moveEvt.clientX,
+//        y: startCoords.y - moveEvt.clientY
+//      };
+//      
+//      startCoords = {
+//        x: moveEvt.clientX,
+//        y: moveEvt.clientY
+//      };
+//      
+//      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
+//      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+//    };
+//
+//    var onMouseUp = function (upEvt) {
+//      upEvt.preventDefault();
+//
+//      document.removeEventListener('mousemove', onMouseMove);
+//      document.removeEventListener('mouseup', onMouseUp);
+//
+//      mapStart();
+//    };
+//
+//    document.addEventListener('mousemove', onMouseMove);
+//    document.addEventListener('mouseup', onMouseUp);
+//  });
+
+
+
+
+
+
+
+//  Вариант 2. Перетаскивание в ограниченном блоке
   var pinHandler = document.querySelector('.map__pin--main');
 
   pinHandler.addEventListener('mousedown', function (evt) {
@@ -325,14 +377,30 @@ selectOfRooms.addEventListener('change', function (evt) {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
       };
+      
+      
+        startCoords = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
+        };
+      
 
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
-
-      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+      if (moveEvt.pageX > 1400) {
+        pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
+        pinHandler.style.left = (1200 - 32) + 'px';
+      } else if (moveEvt.pageY > 750) {
+          pinHandler.style.top = (750 - 32) + 'px';
+          pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+        } else if (moveEvt.pageX < 200) {
+            pinHandler.style.left = (0 - 32) + 'px';
+            pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+          } else if (moveEvt.pageY < 50) {
+              pinHandler.style.top = (0) + 'px';
+              pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+            } else {
+                pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
+                pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+              }
     };
 
     var onMouseUp = function (upEvt) {
@@ -349,4 +417,56 @@ selectOfRooms.addEventListener('change', function (evt) {
   });
 
 
-})();
+
+
+
+
+
+
+//  Вариант 3. Перетаскивание в ограниченном блоке
+//  var pinHandler = document.querySelector('.map__pin--main');
+//
+//  pinHandler.addEventListener('mousedown', function (evt) {
+//    evt.preventDefault();
+//
+//    var startCoords = {
+//      x: evt.clientX,
+//      y: evt.clientY
+//    };
+//
+//    var onMouseMove = function (moveEvt) {
+//      moveEvt.preventDefault();
+//
+//      var shift = {
+//        x: startCoords.x - moveEvt.clientX,
+//        y: startCoords.y - moveEvt.clientY
+//      };
+//      
+//      if ((moveEvt.clientX >= 0 && moveEvt.clientY >= 0) && (moveEvt.clientX < 1200 && moveEvt.clientY < 750)) {
+//        startCoords = {
+//          x: moveEvt.clientX,
+//          y: moveEvt.clientY
+//        };
+//      } else {
+//        startCoords = {
+//          x: moveEvt.clientX - shift.x,
+//          y: moveEvt.clientY - shift.y
+//        };
+//      }
+//      
+//      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
+//      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+//    };
+//
+//    var onMouseUp = function (upEvt) {
+//      upEvt.preventDefault();
+//
+//      document.removeEventListener('mousemove', onMouseMove);
+//      document.removeEventListener('mouseup', onMouseUp);
+//
+//      mapStart();
+//    };
+//
+//    document.addEventListener('mousemove', onMouseMove);
+//    document.addEventListener('mouseup', onMouseUp);
+//  });
