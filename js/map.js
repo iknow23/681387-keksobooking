@@ -31,7 +31,12 @@ var createPhotos = function (imageQuantity) {
 };
 createPhotos(photosQuantity);
 
-//  создаю функцию для поиска случайного числа в пределах max,min значений
+/**
+ * Функция для поиска случайного числа в пределах min и max
+ * @param  {number} min
+ * @param  {number} max
+ * @return {number}
+ */
 function getRandomInteger(min, max) {
   var rand = min - 0.5 + Math.random() * (max - min + 1);
   rand = Math.round(rand);
@@ -41,6 +46,11 @@ function getRandomInteger(min, max) {
 //  создаю массив из 8 объектов (описание жилых помещений)
 var appartments = [];
 
+/**
+ * Функция для рендера жилых помещений
+ * @param  {number} appartmentsQuantity
+ * @return {array} appartments
+ */
 var createAppartments = function (appartmentsQuantity) {
   for (var i = 0; i < appartmentsQuantity; i++) {
     var location = {
@@ -76,6 +86,12 @@ createAppartments(APPARTMENTS_QUANTITY);
 var similarListElement = document.querySelector('.map__pins');
 var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
+/**
+ * Функция для рендера меток
+ * @param  {Object} appartments[i]
+ * @param  {index} i
+ * @return {Object}
+ */
 var renderPin = function (appartment, index) {
   var pinElement = similarPinTemplate.cloneNode(true);
 
@@ -145,13 +161,12 @@ for (var j = 0; j < formElements.length; j++) {
   formElements[j].disabled = true;
 }
 
-//  у блока .map убираю класс .map--faded при нажатии на главную метку
 //  перевожу карту в активное состояния
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
 
 /**
- * Активация карты на нажатие на главную метку
+ * Функция активации карты на нажатие на главную метку
  */
  var mapStart = function () {
   map.classList.remove('map--faded');
@@ -173,14 +188,19 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-//  просмотр подробной информации о похожих объявлениях
-var pins = fragment.querySelectorAll('.map__pin');
-
+/**
+ * Функция скрытия карточки объявления
+ */
 var deleteOpenedCard = function() {
   var mapCard = document.querySelector('.map__card');
   map.removeChild(mapCard);
 };
 
+/**
+ * Функция для рендера карточек обяъвлений при нажатии на метки
+ * @param  {number} pinId
+ * @return {Object} newCard
+ */
 var doCardJob = function(pinId) {
   //  проверка наличия карточки
   var elementAvailable = document.querySelector('.map__card');
@@ -192,6 +212,9 @@ var doCardJob = function(pinId) {
   map.insertBefore(newCard, filter);
 }
 
+/**
+ * Функция для рендера карточек обяъвлений при нажатии на метки
+ */
 var addPinsClickHandler = function() {
   var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pinsList.length; i++) {
@@ -214,259 +237,152 @@ var addPinsClickHandler = function() {
 };
 
 //  изменяю элементы формы
+//  работа с полями 'кол-во комнат' и 'кол-во мест'
 var selectOfRooms = document.querySelector('#room_number');
 var selectOfCapacities = document.querySelector('#capacity');
 var selectOfCapacitiesCollection = selectOfCapacities.querySelectorAll('option');
-console.log(selectOfCapacitiesCollection);
 
 selectOfRooms.addEventListener('change', function (evt) {
   console.log('Event', evt);
   var options = selectOfRooms.querySelectorAll("option");
   if (selectOfRooms.value === "1") {
     selectOfCapacitiesCollection[0].setAttribute('disabled', true);
-	selectOfCapacitiesCollection[1].setAttribute('disabled', true);
-	selectOfCapacitiesCollection[2].removeAttribute('disabled');
-	selectOfCapacitiesCollection[3].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[0].removeAttribute('selected');
+    selectOfCapacitiesCollection[1].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[1].removeAttribute('selected');
+    selectOfCapacitiesCollection[2].removeAttribute('disabled');
+    selectOfCapacitiesCollection[2].setAttribute('selected', true);
+    selectOfCapacitiesCollection[3].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[3].removeAttribute('selected');
 	} else if (selectOfRooms.value === "2") {
-		selectOfCapacitiesCollection[0].setAttribute('disabled', true);
-		selectOfCapacitiesCollection[1].removeAttribute('disabled');
-		selectOfCapacitiesCollection[2].removeAttribute('disabled');
+    selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[0].removeAttribute('selected');
+    selectOfCapacitiesCollection[1].removeAttribute('disabled');
+    selectOfCapacitiesCollection[1].setAttribute('selected', true);
+    selectOfCapacitiesCollection[2].removeAttribute('disabled');
+    selectOfCapacitiesCollection[2].removeAttribute('selected');
+    selectOfCapacitiesCollection[3].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[3].removeAttribute('selected');
+	} else if (selectOfRooms.value === "3") {
+		selectOfCapacitiesCollection[0].removeAttribute('disabled');
+    selectOfCapacitiesCollection[0].setAttribute('selected', true);
+    selectOfCapacitiesCollection[1].removeAttribute('disabled');
+    selectOfCapacitiesCollection[1].removeAttribute('selected');
+    selectOfCapacitiesCollection[2].removeAttribute('disabled');
+    selectOfCapacitiesCollection[2].removeAttribute('selected');
 		selectOfCapacitiesCollection[3].setAttribute('disabled', true);
-		} else if (selectOfRooms.value === "3") {
-			selectOfCapacitiesCollection[0].removeAttribute('disabled');
-			selectOfCapacitiesCollection[2].removeAttribute('disabled');
-			selectOfCapacitiesCollection[1].removeAttribute('disabled');
-			selectOfCapacitiesCollection[3].setAttribute('disabled', true);
-			} else if (selectOfRooms.value === "100") {
-				selectOfCapacitiesCollection[0].setAttribute('disabled', true);
-				selectOfCapacitiesCollection[1].setAttribute('disabled', true);
-				selectOfCapacitiesCollection[2].setAttribute('disabled', true);
-				selectOfCapacitiesCollection[3].removeAttribute('disabled');
-				}
+    selectOfCapacitiesCollection[3].removeAttribute('selected');
+	} else if (selectOfRooms.value === "100") {
+		selectOfCapacitiesCollection[0].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[0].removeAttribute('selected');
+		selectOfCapacitiesCollection[1].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[1].removeAttribute('selected');
+		selectOfCapacitiesCollection[2].setAttribute('disabled', true);
+    selectOfCapacitiesCollection[2].removeAttribute('selected');
+		selectOfCapacitiesCollection[3].removeAttribute('disabled');
+    selectOfCapacitiesCollection[3].setAttribute('selected', true);
+	}
 });
 
-//  с таким вариантом, может лучше удалить из разметки disabled и вставлять через управление DOM'ом
-//  selectOfcapacities.setAttribute('disabled');
+//  работа с полями 'тип жилья' и 'цена за ночь'
+var selectOfRoomsType = document.querySelector('#type');
+var selectOfPrice = document.querySelector('#price');
 
+selectOfRoomsType.addEventListener('change', function (evt) {
+  var options = selectOfRoomsType.querySelectorAll("option");
+  if (selectOfRoomsType.value === "bungalo") {
+    selectOfPrice.setAttribute('min', 0);
+    selectOfPrice.setAttribute('placeholder', 0);
+	} else if (selectOfRoomsType.value === "flat") {
+    selectOfPrice.setAttribute('min', 1000);
+    selectOfPrice.setAttribute('placeholder', 1000);
+	} else if (selectOfRoomsType.value === "house") {
+    selectOfPrice.removeAttribute('placeholder');
+    selectOfPrice.setAttribute('min', 5000);
+    selectOfPrice.setAttribute('placeholder', 5000);
+	} else if (selectOfRoomsType.value === "palace") {
+    selectOfPrice.setAttribute('min', 10000);
+    selectOfPrice.setAttribute('placeholder', 10000);
+	}
+});
 
-//  ещё вариант кода
-//function resultOptionFirst() {
-//  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" disabled>для 2 гостей</option><option value="2" selected>для 1 гостя</option><option value="3" disabled>не для гостей</option>';
-//}
-//
-//function resultOptionSecond() {
-//  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" selected>для 2 гостей</option><option value="2">для 1 гостя</option><option value="3" disabled>не для гостей</option>';
-//}
-//
-//function resultOptionThird() {
-//  selectOfCapacities.innerHTML = '<option value="3" selected>для 3 гостей</option><option value="2">для 2 гостей</option><option value="2">для 1 гостя</option><option value="3" disabled>не для гостей</option>';
-//}
-//
-//function resultOptionFourth() {
-//  selectOfCapacities.innerHTML = '<option value="3" disabled>для 3 гостей</option><option value="2" disabled>для 2 гостей</option><option value="2" disabled>для 1 гостя</option><option value="3" selected>не для гостей</option>';
-//}
-//
-//selectOfRooms.addEventListener('change', function (evt) {
-//  console.log('Event', evt);
-//  var options = selectOfRooms.querySelectorAll("option");
-//  if (selectOfRooms.value == "1") {
-//    resultOptionFirst();
-//  } else if (selectOfRooms.value == "2") {
-//      resultOptionSecond();
-//    } else if (selectOfRooms.value == "3") {
-//        resultOptionThird();
-//      } else if (selectOfRooms.value == "100") {
-//          resultOptionFourth();
-//        }
-//});
+//  работа с полями времени заезда/выезда
+var selectOfTimeIn = document.querySelector('#timein');
+var selectOfTimeOut = document.querySelector('#timeout');
+var selectOfTimeOutCollection = selectOfTimeOut.querySelectorAll('option');
 
-
-
-//  ещё вариант с нахождением клика на текущем элементе = currentTarget (либо evt.target)
-//selectOfRooms.addEventListener('change', function (evt) {
-//  console.log('Event', evt);
-//  var options = selectOfRooms.querySelectorAll("option");
-//  if (evt.currentTarget.value == "2") {
-//    selectOfCapacitiesCollection[1].removeAttribute('disabled');
-//  } else if (evt.currentTarget.value == "3") {
-//      selectOfCapacitiesCollection[0].removeAttribute('disabled');
-//    } else if (evt.currentTarget.value == "100") {
-//        selectOfCapacitiesCollection[0].setAttribute('disabled');
-//        selectOfCapacitiesCollection[1].setAttribute('disabled');
-//        selectOfCapacitiesCollection[2].setAttribute('disabled');
-//        selectOfCapacitiesCollection[3].removeAttribute('disabled');
-//      }
-//});
-
-
-
-
-
-
-
-
-
-
+selectOfTimeIn.addEventListener('change', function (evt) {
+  var options = selectOfTimeIn.querySelectorAll("option");
+  if (selectOfTimeIn.value === "12:00") {
+    selectOfTimeOutCollection[0].removeAttribute('disabled');
+    selectOfTimeOutCollection[0].setAttribute('selected', true);
+		selectOfTimeOutCollection[1].setAttribute('disabled', true);
+    selectOfTimeOutCollection[1].removeAttribute('selected');
+		selectOfTimeOutCollection[2].setAttribute('disabled', true);
+    selectOfTimeOutCollection[2].removeAttribute('selected');
+	} else if (selectOfTimeIn.value === "13:00") {
+    selectOfTimeOutCollection[0].setAttribute('disabled', true);
+    selectOfTimeOutCollection[0].removeAttribute('selected');
+		selectOfTimeOutCollection[1].removeAttribute('disabled');
+    selectOfTimeOutCollection[1].setAttribute('selected', true);
+		selectOfTimeOutCollection[2].setAttribute('disabled', true);
+    selectOfTimeOutCollection[2].removeAttribute('selected');
+	} else if (selectOfTimeIn.value === "14:00") {
+    selectOfTimeOutCollection[0].setAttribute('disabled', true);
+		selectOfTimeOutCollection[0].removeAttribute('selected');
+    selectOfTimeOutCollection[1].setAttribute('disabled', true);
+		selectOfTimeOutCollection[1].removeAttribute('selected');
+    selectOfTimeOutCollection[2].removeAttribute('disabled');
+    selectOfTimeOutCollection[2].setAttribute('selected', true);
+	}
+});
 
 
 
 //  -----------------------------DRAG-N-DROP-----------------------
-//  Вариант 1. Обычное перетаскивание
+var pinHandler = document.querySelector('.map__pin--main');
 
-//  var pinHandler = document.querySelector('.map__pin--main');
-//
-//  pinHandler.addEventListener('mousedown', function (evt) {
-//    evt.preventDefault();
-//
-//    var startCoords = {
-//      x: evt.clientX,
-//      y: evt.clientY
-//    };
-//
-//    var onMouseMove = function (moveEvt) {
-//      moveEvt.preventDefault();
-//
-//      var shift = {
-//        x: startCoords.x - moveEvt.clientX,
-//        y: startCoords.y - moveEvt.clientY
-//      };
-//      
-//      startCoords = {
-//        x: moveEvt.clientX,
-//        y: moveEvt.clientY
-//      };
-//      
-//      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-//      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-//    };
-//
-//    var onMouseUp = function (upEvt) {
-//      upEvt.preventDefault();
-//
-//      document.removeEventListener('mousemove', onMouseMove);
-//      document.removeEventListener('mouseup', onMouseUp);
-//
-//      mapStart();
-//    };
-//
-//    document.addEventListener('mousemove', onMouseMove);
-//    document.addEventListener('mouseup', onMouseUp);
-//  });
+pinHandler.addEventListener('mousedown', function (evt) {
+ evt.preventDefault();
 
+ var startCoords = {
+   x: evt.clientX,
+   y: evt.clientY
+ };
 
+ var onMouseMove = function (moveEvt) {
+   moveEvt.preventDefault();
 
+   var shift = {
+     x: startCoords.x - moveEvt.clientX,
+     y: startCoords.y - moveEvt.clientY
+   };
 
+   if ((moveEvt.clientX >= 0 && moveEvt.clientY >= 0) && (moveEvt.clientX < 1200 && moveEvt.clientY < 750)) {
+     startCoords = {
+       x: moveEvt.clientX,
+       y: moveEvt.clientY
+     };
+   } else {
+     startCoords = {
+       x: moveEvt.clientX - shift.x,
+       y: moveEvt.clientY - shift.y
+     };
+   }
 
+   pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
+   pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+ };
 
+ var onMouseUp = function (upEvt) {
+   upEvt.preventDefault();
 
-//  Вариант 2. Перетаскивание в ограниченном блоке
-  var pinHandler = document.querySelector('.map__pin--main');
+   document.removeEventListener('mousemove', onMouseMove);
+   document.removeEventListener('mouseup', onMouseUp);
 
-  pinHandler.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
+   mapStart();
+ };
 
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-
-    var onMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
-
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
-      };
-      
-      
-        startCoords = {
-          x: moveEvt.clientX,
-          y: moveEvt.clientY
-        };
-      
-
-      if (moveEvt.pageX > 1400) {
-        pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-        pinHandler.style.left = (1200 - 32) + 'px';
-      } else if (moveEvt.pageY > 750) {
-          pinHandler.style.top = (750 - 32) + 'px';
-          pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-        } else if (moveEvt.pageX < 200) {
-            pinHandler.style.left = (0 - 32) + 'px';
-            pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-          } else if (moveEvt.pageY < 50) {
-              pinHandler.style.top = (0) + 'px';
-              pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-            } else {
-                pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-                pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-              }
-    };
-
-    var onMouseUp = function (upEvt) {
-      upEvt.preventDefault();
-
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-
-      mapStart();
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  });
-
-
-
-
-
-
-
-
-//  Вариант 3. Перетаскивание в ограниченном блоке
-//  var pinHandler = document.querySelector('.map__pin--main');
-//
-//  pinHandler.addEventListener('mousedown', function (evt) {
-//    evt.preventDefault();
-//
-//    var startCoords = {
-//      x: evt.clientX,
-//      y: evt.clientY
-//    };
-//
-//    var onMouseMove = function (moveEvt) {
-//      moveEvt.preventDefault();
-//
-//      var shift = {
-//        x: startCoords.x - moveEvt.clientX,
-//        y: startCoords.y - moveEvt.clientY
-//      };
-//      
-//      if ((moveEvt.clientX >= 0 && moveEvt.clientY >= 0) && (moveEvt.clientX < 1200 && moveEvt.clientY < 750)) {
-//        startCoords = {
-//          x: moveEvt.clientX,
-//          y: moveEvt.clientY
-//        };
-//      } else {
-//        startCoords = {
-//          x: moveEvt.clientX - shift.x,
-//          y: moveEvt.clientY - shift.y
-//        };
-//      }
-//      
-//      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-//      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-//    };
-//
-//    var onMouseUp = function (upEvt) {
-//      upEvt.preventDefault();
-//
-//      document.removeEventListener('mousemove', onMouseMove);
-//      document.removeEventListener('mouseup', onMouseUp);
-//
-//      mapStart();
-//    };
-//
-//    document.addEventListener('mousemove', onMouseMove);
-//    document.addEventListener('mouseup', onMouseUp);
-//  });
+ document.addEventListener('mousemove', onMouseMove);
+ document.addEventListener('mouseup', onMouseUp);
+});
