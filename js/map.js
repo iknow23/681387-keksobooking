@@ -166,20 +166,6 @@ var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
 
 /**
- * активация карты на нажатие на главную метку
- */
- var mapStart = function () {
-  map.classList.remove('map--faded');
-  mainForm.classList.remove('ad-form--disabled');
-  for (var i = 0; i < formElements.length; i++) {
-    formElements[i].disabled = false;
-  }
-  similarListElement.appendChild(fragment);
-
-  addPinsClickHandler();
-};
-
-/**
  * заполнение координат метки в поле формы
  * @param {number} left, top
  * @return {numbers}
@@ -188,12 +174,6 @@ var fillAdress = function (left, top) {
   var inputAdress = document.querySelector('#address');
   inputAdress.value = left + ', ' + top;
 };
-
-mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER) {
-    mapStart();
-  }
-});
 
 /**
  * скрытие карточки объявления
@@ -383,10 +363,27 @@ pinHandler.addEventListener('mousedown', function (evt) {
    x: evt.clientX,
    y: evt.clientY
  };
-  console.log(startCoords);
+
+ var activeState = false;
 
  var onMouseMove = function (moveEvt) {
    moveEvt.preventDefault();
+   debugger;
+   if (!activeState) {
+     /**
+      * активация карты на нажатие на главную метку
+      */
+      map.classList.remove('map--faded');
+      mainForm.classList.remove('ad-form--disabled');
+      for (var i = 0; i < formElements.length; i++) {
+       formElements[i].disabled = false;
+      }
+      similarListElement.appendChild(fragment);
+
+      addPinsClickHandler();
+
+      activeState = true;
+    }
 
    var shift = {
      x: startCoords.x - moveEvt.clientX,
@@ -397,8 +394,6 @@ pinHandler.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-
-   // fillAdress(startCoords.x, startCoords.y);
 
    var mainPinHalf = 32;
    var bodyRect = document.body.getBoundingClientRect();
@@ -435,7 +430,6 @@ pinHandler.addEventListener('mousedown', function (evt) {
    document.removeEventListener('mousemove', onMouseMove);
    document.removeEventListener('mouseup', onMouseUp);
 
-   mapStart();
  };
 
  document.addEventListener('mousemove', onMouseMove);
