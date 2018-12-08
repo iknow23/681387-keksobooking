@@ -398,7 +398,7 @@ pinHandler.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-   fillAdress(startCoords.x, startCoords.y);
+   // fillAdress(startCoords.x, startCoords.y);
 
    var mainPinHalf = 32;
    var bodyRect = document.body.getBoundingClientRect();
@@ -425,6 +425,8 @@ pinHandler.addEventListener('mousedown', function (evt) {
       pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
       pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
    }
+
+   fillAdress(pinHandler.offsetLeft, pinHandler.offsetTop);
  };
 
  var onMouseUp = function (upEvt) {
