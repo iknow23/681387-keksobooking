@@ -1,8 +1,10 @@
 (function () {
-
 'use strict';
 
 var filter = document.querySelector('.map__filters-container');
+window.filter = {
+  filter: filter
+};
 
 /**
  * заполнение координат метки в поле формы
@@ -12,6 +14,10 @@ var filter = document.querySelector('.map__filters-container');
 var fillAdress = function (left, top) {
   var inputAdress = document.querySelector('#address');
   inputAdress.value = left + ', ' + top;
+};
+
+window.filter = {
+  fillAdress: fillAdress
 };
 
 //  работа с полями 'кол-во комнат' и 'кол-во мест'

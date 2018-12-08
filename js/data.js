@@ -1,5 +1,4 @@
 (function () {
-
 'use strict';
 
 var APPARTMENTS_QUANTITY = 8; //  количество объявлений
@@ -45,6 +44,12 @@ function getRandomInteger(min, max) {
 
 //  создаю массив из 8 объектов (описание жилых помещений)
 var appartments = [];
+
+window.data = {
+  appartments: appartments,
+  APPARTMENT_TYPES: APPARTMENT_TYPES,
+  PHOTOS: PHOTOS
+};
 
 /**
  * рендер жилых помещений

@@ -1,10 +1,12 @@
 (function () {
-
 'use strict';
 
 //  создание меток объявлений
 var similarListElement = document.querySelector('.map__pins');
 var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+window.pin = {
+  similarListElement: similarListElement
+};
 
 /**
  * рендер меток
@@ -25,10 +27,9 @@ var renderPin = function (appartment, index) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < appartments.length; i++) {
-  fragment.appendChild(renderPin(appartments[i], i));
+for (var i = 0; i < window.data.appartments.length; i++) {
+  fragment.appendChild(renderPin(window.data.appartments[i], i));
 }
-
 
 //  -----------------------------DRAG-N-DROP-----------------------
 var pinHandler = document.querySelector('.map__pin--main');
@@ -47,16 +48,16 @@ pinHandler.addEventListener('mousedown', function (evt) {
    moveEvt.preventDefault();
    if (!activeState) {
      /**
-      * активация карты на нажатие на главную метку
+      * активация карты при перемещении главной метки
       */
-      map.classList.remove('map--faded');
-      mainForm.classList.remove('ad-form--disabled');
-      for (var i = 0; i < formElements.length; i++) {
-       formElements[i].disabled = false;
+      window.map.map.classList.remove('map--faded');
+      window.map.mainForm.classList.remove('ad-form--disabled');
+      for (var i = 0; i < window.map.formElements.length; i++) {
+        window.map.formElements[i].disabled = false;
       }
       similarListElement.appendChild(fragment);
 
-      addPinsClickHandler();
+      window.map.addPinsClickHandler();
 
       activeState = true;
     }
@@ -97,7 +98,7 @@ pinHandler.addEventListener('mousedown', function (evt) {
       pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
    }
 
-   fillAdress(pinHandler.offsetLeft, pinHandler.offsetTop);
+   window.filter.fillAdress(pinHandler.offsetLeft, pinHandler.offsetTop);
  };
 
  var onMouseUp = function (upEvt) {

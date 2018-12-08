@@ -1,5 +1,4 @@
 (function () {
-
 'use strict';
 
 var ESC = 27;
@@ -36,15 +35,15 @@ var doCardJob = function(pinId) {
     deleteOpenedCard();
   }
 
-  var newCard = renderCard(appartments[pinId]);
-  map.insertBefore(newCard, filter);
+  var newCard = window.card.renderCard(window.data.appartments[pinId]);
+  map.insertBefore(newCard, window.filter.filter);
 }
 
 /**
  * рендер карточек объявлений при нажатии на метки
  */
 var addPinsClickHandler = function() {
-  var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var pinsList = window.pin.similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pinsList.length; i++) {
     pinsList[i].addEventListener('click', function(evt) {
       var button = evt.currentTarget;
@@ -64,4 +63,12 @@ var addPinsClickHandler = function() {
   }
 };
 
+window.map = {
+  map: map,
+  formElements: formElements,
+  mainForm: mainForm,
+  addPinsClickHandler: addPinsClickHandler
+};
+
 })();
+

@@ -1,5 +1,4 @@
 (function () {
-
 'use strict';
 
 //  создание карточки объявления
@@ -17,7 +16,7 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
+  cardElement.querySelector('.popup__type').textContent = window.data.APPARTMENT_TYPES[appartment.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
 
@@ -31,7 +30,7 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
 
   cardElement.querySelector('.popup__photos').innerHTML = '';
-  for (var i = 0; i < PHOTOS.length; i++) {
+  for (var i = 0; i < window.data.PHOTOS.length; i++) {
     var elementImg = document.createElement('img');
     elementImg.className = 'popup__photo';
     elementImg.src = appartment.offer.photos[i];
@@ -42,6 +41,10 @@ var renderCard = function (appartment) {
   }
 
   return cardElement;
+};
+  
+window.card = {
+  renderCard: renderCard
 };
 
 })();
