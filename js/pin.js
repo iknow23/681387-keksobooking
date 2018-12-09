@@ -69,6 +69,7 @@
         y: moveEvt.clientY
       };
 
+     var mainPinHeight = 80;
      var mainPinHalf = 32;
      var bodyRect = document.body.getBoundingClientRect();
      var mapp = document.querySelector('.map__overlay');
@@ -95,7 +96,7 @@
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
      }
 
-     window.filter.fillAdress(pinHandler.offsetLeft, pinHandler.offsetTop);
+     window.filter.fillAdress(pinHandler.offsetLeft + mainPinHalf, pinHandler.offsetTop + mainPinHeight);
    };
 
    var onMouseUp = function (upEvt) {
