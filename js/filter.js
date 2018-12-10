@@ -1,7 +1,15 @@
 (function () {
   'use strict';
 
+  var mainForm = document.querySelector('.ad-form');
   var filter = document.querySelector('.map__filters-container');
+  
+  //  активация страницы, отключаю все элементы ввода формы
+  var formElements = document.querySelectorAll('fieldset');
+
+  for (var j = 0; j < formElements.length; j++) {
+    formElements[j].disabled = true;
+  }
 
   /**
    * заполнение координат метки в поле формы
@@ -140,6 +148,8 @@
   });
 
   window.filter = {
+    mainForm: mainForm,
+    formElements: formElements,
     filter: filter,
     fillAdress: fillAdress
   };
