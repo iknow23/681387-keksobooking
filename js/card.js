@@ -43,8 +43,6 @@
     return cardElement;
   };
 
-  window.card = {
-    renderCard: renderCard
-  };
+  window.card = renderCard;
 
 })();

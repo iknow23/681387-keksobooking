@@ -25,7 +25,7 @@
       deleteOpenedCard();
     }
 
-    var newCard = window.card.renderCard(window.data.appartments[pinId]);
+    var newCard = window.card(window.data[pinId]);
     map.insertBefore(newCard, window.filter.filter);
   }
 
@@ -36,7 +36,6 @@
     var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinsList.length; i++) {
       pinsList[i].addEventListener('click', function(evt) {
-        debugger;
         var button = evt.currentTarget;
         var pinId = button.getAttribute('data-id');
         doCardJob(pinId);
@@ -74,15 +73,18 @@
         map.classList.remove('map--faded');
         window.filter.mainForm.classList.remove('ad-form--disabled');
 
-        window.load(function (appartments) {
+        window.backend.load(function (appartments) {
+          window.data = appartments;
           var fragment = document.createDocumentFragment();
           for (var i = 0; i < appartments.length; i++) {
-            fragment.appendChild(window.pin.renderPin(appartments[i], i));
+            fragment.appendChild(window.pin(appartments[i], i));
           }
           similarListElement.appendChild(fragment);
           for (var i = 0; i < window.filter.formElements.length; i++) {
             window.filter.formElements[i].disabled = false;
           }
+
+          addPinsClickHandler();
         });
 
         activeState = true;
@@ -101,8 +103,8 @@
      var mainPinHeight = 80;
      var mainPinHalf = 32;
      var bodyRect = document.body.getBoundingClientRect();
-     var mapp = document.querySelector('.map__overlay');
-     var elemRect = mapp.getBoundingClientRect();
+     var mapOverlay = document.querySelector('.map__overlay');
+     var elemRect = mapOverlay.getBoundingClientRect();
      var offsetLeft   = elemRect.left - bodyRect.left;
      var offsetTop   = elemRect.top - bodyRect.top;
      var offsetRight   = elemRect.right - bodyRect.left;
@@ -133,17 +135,11 @@
 
      document.removeEventListener('mousemove', onMouseMove);
      document.removeEventListener('mouseup', onMouseUp);
-     
-     addPinsClickHandler();
 
    };
 
    document.addEventListener('mousemove', onMouseMove);
    document.addEventListener('mouseup', onMouseUp);
   });
-    
-  window.map = {
-    map: map
-  };
-  
+
 })();
