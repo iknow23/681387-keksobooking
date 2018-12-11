@@ -73,7 +73,7 @@
         map.classList.remove('map--faded');
         window.filter.mainForm.classList.remove('ad-form--disabled');
 
-        window.backend.load(function (appartments) {
+        var successHandler = function (appartments) {
           window.data = appartments;
           var fragment = document.createDocumentFragment();
           for (var i = 0; i < appartments.length; i++) {
@@ -85,7 +85,22 @@
           }
 
           addPinsClickHandler();
-        });
+        };
+
+        var errorHandler = function (errorMessage) {
+          var node = document.createElement('div');
+          node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: yellow; top: 200px; padding: 45px 0px; color: red;';
+          node.style.width = '500px';
+          node.style.position = 'absolute';
+          node.style.left = 0;
+          node.style.right = 0;
+          node.style.fontSize = '30px';
+
+          node.textContent = errorMessage;
+          document.body.insertAdjacentElement('afterbegin', node);
+        };
+
+        window.backend.load(successHandler, errorHandler);
 
         activeState = true;
       }

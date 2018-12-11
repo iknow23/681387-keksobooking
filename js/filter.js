@@ -3,7 +3,7 @@
 
   var mainForm = document.querySelector('.ad-form');
   var filter = document.querySelector('.map__filters-container');
-  
+
   //  активация страницы, отключаю все элементы ввода формы
   var formElements = document.querySelectorAll('fieldset');
 
@@ -145,6 +145,17 @@
 
   timeOutSelect.addEventListener('change', function(evt) {
     selectHandler(evt, timeInSelectOptions);
+  });
+
+  mainForm.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(mainForm), function (response) {
+      mainForm.classList.add('ad-form--disabled');
+      for (var i = 0; i < formElements.length; i++) {
+        formElements[i].disabled = true;
+      }
+    });
+    evt.preventDefault();
+
   });
 
   window.filter = {
