@@ -1,10 +1,10 @@
 (function () {
   'use strict';
 
-  var loadUrl = 'https://js.dump.academy/keksobooking/data';
-  var uploadUrl = 'https://js.dump.academy/keksobooking';
-  var statusGood = 200;
-  var tenSeconds = 10000;
+  var LOADURL = 'https://js.dump.academy/keksobooking/data';
+  var UPLOADURL = 'https://js.dump.academy/keksobooking';
+  var STATUSGOOD = 200;
+  var TENSECONDS = 10000;
 
   /**
    * получение данных с сервера
@@ -17,7 +17,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener ('load', function () {
-      if (xhr.status === statusGood) {
+      if (xhr.status === STATUSGOOD) {
         onLoad(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -32,9 +32,9 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = tenSeconds;
+    xhr.timeout = TENSECONDS;
 
-    xhr.open('GET', loadUrl);
+    xhr.open('GET', LOADURL);
     xhr.send();
   };
 
@@ -50,7 +50,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === statusGood) {
+      if (xhr.status === STATUSGOOD) {
         onLoad(xhr.response);
       } else {
         onError('Статус отправки: ' + xhr.status + ' ' + xhr.statusText);
@@ -61,7 +61,7 @@
       onError('Произошла ошибка');
     });
 
-    xhr.open('POST', uploadUrl);
+    xhr.open('POST', UPLOADURL);
     xhr.send(data);
   };
 
