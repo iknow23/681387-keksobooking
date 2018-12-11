@@ -157,4 +157,6 @@
    document.addEventListener('mouseup', onMouseUp);
   });
 
+  window.map = ESC;
+
 })();

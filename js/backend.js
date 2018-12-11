@@ -57,6 +57,10 @@
       }
     });
 
+    xhr.addEventListener ('error', function () {
+      onError('Произошла ошибка');
+    });
+
     xhr.open('POST', uploadUrl);
     xhr.send(data);
   };

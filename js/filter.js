@@ -148,12 +148,46 @@
   });
 
   mainForm.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData(mainForm), function (response) {
-      mainForm.classList.add('ad-form--disabled');
-      for (var i = 0; i < formElements.length; i++) {
-        formElements[i].disabled = true;
-      }
-    });
+    var data = new FormData(mainForm);
+
+    var successHandler = function (response) {
+      var similarElement = document.querySelector('main');
+      var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
+      var successElement = similarSuccessTemplate.cloneNode(true);
+
+      similarElement.appendChild(successElement);
+
+      document.addEventListener('click', function() {
+        similarElement.removeChild(successElement);
+      });
+
+      document.addEventListener('keydown', function(evt) {
+        if (evt.keyCode === window.map) {
+          similarElement.removeChild(successElement);
+        }
+      });
+    };
+
+    var errorHandler = function (errorMessage) {
+      var similarElement = document.querySelector('main');
+      var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+      var errorElement = similarErrorTemplate.cloneNode(true);
+
+      similarElement.appendChild(errorElement);
+
+      var button = errorElement.querySelector('.error__button');
+      button.addEventListener('click', function() {
+        similarElement.removeChild(errorElement);
+      });
+      document.addEventListener('keydown', function(evt) {
+        if(evt.keyCode === window.map) {
+          similarElement.removeChild(errorElement);
+        }
+      });
+    }
+
+    window.backend.upload(data, successHandler, errorHandler);
+
     evt.preventDefault();
 
   });
