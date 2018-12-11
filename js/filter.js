@@ -166,6 +166,8 @@
           similarElement.removeChild(successElement);
         }
       });
+
+      mainForm.reset();
     };
 
     var errorHandler = function (errorMessage) {
