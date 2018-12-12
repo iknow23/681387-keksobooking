@@ -167,7 +167,20 @@
         }
       });
 
+      window.map.map.classList.add('map--faded');
+      window.map.map.removeChild(document.querySelector('.map__card'));
+
+      var pinsElement = document.querySelector('.map__pins')
+      var pinsList = pinsElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+      for (var i = 0; i < pinsList.length; i++) {
+        pinsElement.removeChild(pinsList[i]);
+      }
+      window.map.pinHandler.style.left = '570px';
+      window.map.pinHandler.style.top = '375px';
+
+      mainForm.classList.add('ad-form--disabled');
       mainForm.reset();
+      disable();
     };
 
     var errorHandler = function (errorMessage) {
@@ -194,14 +207,19 @@
   });
 
   var enable = function() {
-    for (var i = 0; i < window.filter.formElements.length; i++) {
-      window.filter.formElements[i].disabled = false;
+    for (var i = 0; i < formElements.length; i++) {
+      formElements[i].disabled = false;
+    }
+  };
+
+  var disable = function() {
+    for (var i = 0; i < formElements.length; i++) {
+      formElements[i].disabled = true;
     }
   };
 
   window.filter = {
     mainForm: mainForm,
-    formElements: formElements,
     filter: filter,
     fillAdress: fillAdress,
     enable: enable

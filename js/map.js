@@ -138,7 +138,9 @@
   });
 
   window.map = {
-    similarListElement: similarListElement
+    map: map,
+    similarListElement: similarListElement,
+    pinHandler: pinHandler
   };
 
 })();
