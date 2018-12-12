@@ -176,7 +176,7 @@
         pinsElement.removeChild(pinsList[i]);
       }
       window.map.pinHandler.style.left = '570px';
-      window.map.pinHandler.style.top = '375px'
+      window.map.pinHandler.style.top = '375px';
 
       mainForm.classList.add('ad-form--disabled');
       mainForm.reset();
