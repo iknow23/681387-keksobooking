@@ -108,14 +108,14 @@
      if (moveEvt.pageX < 200) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (offsetLeft - mainPinHalf) + 'px';
-     } else if (moveEvt.pageY < 15) {
-        pinHandler.style.top = (offsetTop) + 'px';
+     } else if (moveEvt.pageY < 180) {
+        pinHandler.style.top = (offsetTop + 130) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
      } else if (moveEvt.pageX > 1390) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (offsetRight - mainPinHalf) + 'px';
-     } else if (moveEvt.pageY > 700) {
-        pinHandler.style.top = (offsetBottom - mainPinHalf) + 'px';
+     } else if (moveEvt.pageY > 650) {
+        pinHandler.style.top = (offsetBottom - 50 - mainPinHalf) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
      } else {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
