@@ -191,14 +191,20 @@
     window.backend.upload(data, successHandler, errorHandler);
 
     evt.preventDefault();
-
   });
+
+  var enable = function() {
+    for (var i = 0; i < window.filter.formElements.length; i++) {
+      window.filter.formElements[i].disabled = false;
+    }
+  };
 
   window.filter = {
     mainForm: mainForm,
     formElements: formElements,
     filter: filter,
-    fillAdress: fillAdress
+    fillAdress: fillAdress,
+    enable: enable
   };
 
 })();

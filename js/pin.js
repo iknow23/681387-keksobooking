@@ -22,6 +22,18 @@
     return pinElement;
   };
 
-  window.pin = renderPin;
+  var render = function() {
+    var appartments = window.data.appartments;
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < appartments.length; i++) {
+      fragment.appendChild(renderPin(appartments[i], i));
+    }
+    window.map.similarListElement.appendChild(fragment);
+  };
+
+  window.pin = {
+    render: render
+  };
+
 
 })();

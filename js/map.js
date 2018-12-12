@@ -55,6 +55,15 @@
   //  активация карты и DRAG-N-DROP
   var pinHandler = document.querySelector('.map__pin--main');
 
+  var successHandler = function (appartments) {
+    window.data.appartments = appartments;
+    window.pin.render();
+
+    window.filter.enable();
+
+    addPinsClickHandler();
+  };
+
   pinHandler.addEventListener('mousedown', function (evt) {
    evt.preventDefault();
 
@@ -68,40 +77,12 @@
    var onMouseMove = function (moveEvt) {
      moveEvt.preventDefault();
      if (!activeState) {
-        // активация карты при перемещении главной метки
+       activeState = true;
+
         map.classList.remove('map--faded');
         window.filter.mainForm.classList.remove('ad-form--disabled');
 
-        var successHandler = function (appartments) {
-          window.data.appartments = appartments;
-          var fragment = document.createDocumentFragment();
-          for (var i = 0; i < appartments.length; i++) {
-            fragment.appendChild(window.pin(appartments[i], i));
-          }
-          similarListElement.appendChild(fragment);
-          for (var i = 0; i < window.filter.formElements.length; i++) {
-            window.filter.formElements[i].disabled = false;
-          }
-
-          addPinsClickHandler();
-        };
-
-        var errorHandler = function (errorMessage) {
-          var node = document.createElement('div');
-          node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: yellow; top: 200px; padding: 45px 0px; color: red;';
-          node.style.width = '500px';
-          node.style.position = 'absolute';
-          node.style.left = 0;
-          node.style.right = 0;
-          node.style.fontSize = '30px';
-
-          node.textContent = errorMessage;
-          document.body.insertAdjacentElement('afterbegin', node);
-        };
-
-        window.backend.load(successHandler, errorHandler);
-
-        activeState = true;
+        window.backend.load(successHandler, window.utils.errorHandler);
       }
 
      var shift = {
@@ -155,5 +136,9 @@
    document.addEventListener('mousemove', onMouseMove);
    document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.map = {
+    similarListElement: similarListElement
+  };
 
 })();
