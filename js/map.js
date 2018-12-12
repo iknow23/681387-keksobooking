@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  var ESC = 27;
   var map = document.querySelector('.map');
   var similarListElement = document.querySelector('.map__pins');
 
@@ -25,7 +24,7 @@
       deleteOpenedCard();
     }
 
-    var newCard = window.card(window.data[pinId]);
+    var newCard = window.card(window.data.appartments[pinId]);
     map.insertBefore(newCard, window.filter.filter);
   }
 
@@ -45,7 +44,7 @@
           deleteOpenedCard();
         });
         document.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === ESC) {
+          if (evt.keyCode === window.data.ESC) {
             deleteOpenedCard();
           }
         });
@@ -74,7 +73,7 @@
         window.filter.mainForm.classList.remove('ad-form--disabled');
 
         var successHandler = function (appartments) {
-          window.data = appartments;
+          window.data.appartments = appartments;
           var fragment = document.createDocumentFragment();
           for (var i = 0; i < appartments.length; i++) {
             fragment.appendChild(window.pin(appartments[i], i));
@@ -156,7 +155,5 @@
    document.addEventListener('mousemove', onMouseMove);
    document.addEventListener('mouseup', onMouseUp);
   });
-
-  window.map = ESC;
 
 })();
