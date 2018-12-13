@@ -1,10 +1,10 @@
 (function () {
   'use strict';
 
-  var LOADURL = 'https://js.dump.academy/keksobooking/data';
-  var UPLOADURL = 'https://js.dump.academy/keksobooking';
-  var STATUSGOOD = 200;
-  var TENSECONDS = 10000;
+  var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
+  var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
+  var STATUS_GOOD = 200;
+  var TEN_SECONDS = 10000;
 
   /**
    * получение данных с сервера
@@ -16,15 +16,15 @@
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
-    xhr.addEventListener ('load', function () {
-      if (xhr.status === STATUSGOOD) {
+    xhr.addEventListener('load', function () {
+      if (xhr.status === STATUS_GOOD) {
         onLoad(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
-    xhr.addEventListener ('error', function () {
+    xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
     });
 
@@ -32,9 +32,9 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = TENSECONDS;
+    xhr.timeout = TEN_SECONDS;
 
-    xhr.open('GET', LOADURL);
+    xhr.open('GET', LOAD_URL);
     xhr.send();
   };
 
@@ -50,18 +50,18 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === STATUSGOOD) {
+      if (xhr.status === STATUS_GOOD) {
         onLoad(xhr.response);
       } else {
         onError('Статус отправки: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
-    xhr.addEventListener ('error', function () {
+    xhr.addEventListener('error', function () {
       onError('Произошла ошибка');
     });
 
-    xhr.open('POST', UPLOADURL);
+    xhr.open('POST', UPLOAD_URL);
     xhr.send(data);
   };
 

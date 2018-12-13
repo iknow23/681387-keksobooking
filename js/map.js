@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  var ESC = 27;
   var map = document.querySelector('.map');
   var similarListElement = document.querySelector('.map__pins');
 
@@ -25,7 +24,7 @@
       deleteOpenedCard();
     }
 
-    var newCard = window.card(window.data[pinId]);
+    var newCard = window.card(window.data.appartments[pinId]);
     map.insertBefore(newCard, window.filter.filter);
   }
 
@@ -45,7 +44,7 @@
           deleteOpenedCard();
         });
         document.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === ESC) {
+          if (evt.keyCode === window.data.ESC) {
             deleteOpenedCard();
           }
         });
@@ -55,6 +54,15 @@
 
   //  активация карты и DRAG-N-DROP
   var pinHandler = document.querySelector('.map__pin--main');
+
+  var successHandler = function (appartments) {
+    window.data.appartments = appartments;
+    window.pin.render();
+
+    window.filter.enable();
+
+    addPinsClickHandler();
+  };
 
   pinHandler.addEventListener('mousedown', function (evt) {
    evt.preventDefault();
@@ -69,40 +77,12 @@
    var onMouseMove = function (moveEvt) {
      moveEvt.preventDefault();
      if (!activeState) {
-        // активация карты при перемещении главной метки
+       activeState = true;
+
         map.classList.remove('map--faded');
         window.filter.mainForm.classList.remove('ad-form--disabled');
 
-        var successHandler = function (appartments) {
-          window.data = appartments;
-          var fragment = document.createDocumentFragment();
-          for (var i = 0; i < appartments.length; i++) {
-            fragment.appendChild(window.pin(appartments[i], i));
-          }
-          similarListElement.appendChild(fragment);
-          for (var i = 0; i < window.filter.formElements.length; i++) {
-            window.filter.formElements[i].disabled = false;
-          }
-
-          addPinsClickHandler();
-        };
-
-        var errorHandler = function (errorMessage) {
-          var node = document.createElement('div');
-          node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: yellow; top: 200px; padding: 45px 0px; color: red;';
-          node.style.width = '500px';
-          node.style.position = 'absolute';
-          node.style.left = 0;
-          node.style.right = 0;
-          node.style.fontSize = '30px';
-
-          node.textContent = errorMessage;
-          document.body.insertAdjacentElement('afterbegin', node);
-        };
-
-        window.backend.load(successHandler, errorHandler);
-
-        activeState = true;
+        window.backend.load(successHandler, window.utils.errorHandler);
       }
 
      var shift = {
@@ -128,14 +108,14 @@
      if (moveEvt.pageX < 200) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (offsetLeft - mainPinHalf) + 'px';
-     } else if (moveEvt.pageY < 15) {
-        pinHandler.style.top = (offsetTop) + 'px';
+     } else if (moveEvt.pageY < 180) {
+        pinHandler.style.top = (offsetTop + 130) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
      } else if (moveEvt.pageX > 1390) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (offsetRight - mainPinHalf) + 'px';
-     } else if (moveEvt.pageY > 700) {
-        pinHandler.style.top = (offsetBottom - mainPinHalf) + 'px';
+     } else if (moveEvt.pageY > 650) {
+        pinHandler.style.top = (offsetBottom - 50 - mainPinHalf) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
      } else {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
@@ -157,6 +137,10 @@
    document.addEventListener('mouseup', onMouseUp);
   });
 
-  window.map = ESC;
+  window.map = {
+    map: map,
+    similarListElement: similarListElement,
+    pinHandler: pinHandler
+  };
 
 })();
