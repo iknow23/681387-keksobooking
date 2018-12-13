@@ -16,7 +16,7 @@
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
-    xhr.addEventListener ('load', function () {
+    xhr.addEventListener('load', function () {
       if (xhr.status === STATUS_GOOD) {
         onLoad(xhr.response);
       } else {
@@ -24,7 +24,7 @@
       }
     });
 
-    xhr.addEventListener ('error', function () {
+    xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
     });
 
@@ -57,7 +57,7 @@
       }
     });
 
-    xhr.addEventListener ('error', function () {
+    xhr.addEventListener('error', function () {
       onError('Произошла ошибка');
     });
 
