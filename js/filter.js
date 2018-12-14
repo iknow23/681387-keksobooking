@@ -162,13 +162,13 @@
       });
 
       document.addEventListener('keydown', function(evt) {
-        if (evt.keyCode === window.map) {
+        if (evt.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(successElement);
         }
       });
 
-      window.map.map.classList.add('map--faded');
-      window.map.map.removeChild(document.querySelector('.map__card'));
+      window.map.mainMap.classList.add('map--faded');
+      window.map.cardAvailable();
 
       var pinsElement = document.querySelector('.map__pins')
       var pinsList = pinsElement.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -195,7 +195,7 @@
         similarElement.removeChild(errorElement);
       });
       document.addEventListener('keydown', function(evt) {
-        if(evt.keyCode === window.map) {
+        if(evt.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(errorElement);
         }
       });

@@ -1,8 +1,10 @@
 (function () {
   'use strict';
 
-  var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
-  var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
+  var Url = {
+    LOAD: 'https://js.dump.academy/keksobooking/data',
+    UPLOAD: 'https://js.dump.academy/keksobooking'
+  };
   var STATUS_GOOD = 200;
   var TEN_SECONDS = 10000;
 
@@ -34,7 +36,7 @@
 
     xhr.timeout = TEN_SECONDS;
 
-    xhr.open('GET', LOAD_URL);
+    xhr.open('GET', Url.LOAD);
     xhr.send();
   };
 
@@ -61,7 +63,7 @@
       onError('Произошла ошибка');
     });
 
-    xhr.open('POST', UPLOAD_URL);
+    xhr.open('POST', Url.UPLOAD);
     xhr.send(data);
   };
 
