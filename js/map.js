@@ -28,7 +28,7 @@
     cardAvailable();
 
     var newCard = window.card(window.data.appartments[pinId]);
-    mainMap.insertBefore(newCard, window.filter.filter);
+    mainMap.insertBefore(newCard, window.form.filter);
   }
 
   /**
@@ -62,10 +62,12 @@
     window.data.appartments = appartments;
     window.pin.render();
 
-    window.filter.enable();
+    window.form.enable();
 
     addPinsClickHandler();
   };
+
+  var activeState = false;
 
   pinHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -75,15 +77,14 @@
       y: evt.clientY
     };
 
-    var activeState = false;
-
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+
       if (!activeState) {
         activeState = true;
 
         mainMap.classList.remove('map--faded');
-        window.filter.mainForm.classList.remove('ad-form--disabled');
+        window.form.mainForm.classList.remove('ad-form--disabled');
 
         window.backend.load(successHandler, window.utils.errorHandler);
       }
@@ -125,7 +126,7 @@
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
       }
 
-      window.filter.fillAdress(pinHandler.offsetLeft + mainPinHalf, pinHandler.offsetTop + mainPinHeight);
+      window.form.fillAdress(pinHandler.offsetLeft + mainPinHalf, pinHandler.offsetTop + mainPinHeight);
     };
 
     var onMouseUp = function (upEvt) {

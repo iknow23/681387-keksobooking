@@ -11,6 +11,23 @@
    * @return {Object}
    */
   var renderPin = function (appartment, index) {
+    //  скрытие карточки объявления
+    window.map.cardAvailable();
+
+    //  скрытие меток объявлений
+    var deletePins = function() {
+      var pinsMap = document.querySelector('.map__pins');
+      var pinsList = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      for (var i = 0; i < pinsList.length; i++) {
+        pinsMap.removeChild(pinsList[i]);
+      }
+    };
+    //  проверка наличия меток
+    var elementAvailable = document.querySelector('.map__pin');
+    if (elementAvailable) {
+      deletePins();
+    }
+
     var pinElement = similarPinTemplate.cloneNode(true);
 
     pinElement.style.left = appartment.location.x + 'px';
@@ -22,8 +39,12 @@
     return pinElement;
   };
 
-  var render = function() {
-    var appartments = window.data.appartments;
+  var isFirstStart = true;
+  var render = function(appartments) {
+    if (isFirstStart) {
+      var appartments = window.data.appartments;
+      isFirstStart = false;
+    }
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < appartments.length; i++) {
       fragment.appendChild(renderPin(appartments[i], i));
