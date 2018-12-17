@@ -60,7 +60,7 @@
 
   var successHandler = function (appartments) {
     window.data.appartments = appartments;
-    window.pin.render();
+    window.pin.render(appartments);
 
     window.form.enable();
 

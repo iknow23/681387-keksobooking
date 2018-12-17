@@ -42,8 +42,63 @@
     newPinsArray = newPinsArray.concat(questsOfPins);
     newPinsArray = newPinsArray.concat(featuresOfPins);
 
+    // var newPins;
+    // if ( (typeFilter.checked = true) && (roomsFilter.checked = true) ) {
+    //   newPins = newPinsArray.filter(function (pin) {
+    //     return pin.offer.type === filterState['housing-type'] &&
+    //     pin.offer.rooms == filterState['housing-rooms'];
+    //   });
+    // } else
+    // if (typeFilter.checked = true) {
+    //   newPins = newPinsArray.filter(function (pin) {
+    //     return pin.offer.type === filterState['housing-type'];
+    //   });
+    // }
+
     return newPinsArray;
   };
+
+  // var filterPins = function () {
+  //   var newPinsArray = window.data.appartments.filter(function (pin) {
+  //     if (pin.offer.type === filterState['housing-type']) {
+  //       return pin.offer.type === filterState['housing-type'];
+  //     } else
+  //     if (pin.offer.type === filterState['housing-type'] && pin.offer.rooms == filterState['housing-rooms']) {
+  //       return pin.offer.rooms == filterState['housing-rooms'] && pin.offer.type === filterState['housing-type'];
+  //     }
+  //   });
+  //   return newPinsArray;
+  // };
+
+  // var filterPins = function () {
+  //   var typeOfPins = window.data.appartments.filter(function (pin) {
+  //     return pin.offer.type === filterState['housing-type'];
+  //   });
+  //
+  //   var priceOfPins = window.data.appartments.filter(function (pin) {
+  //     return pin.offer.price === filterState['housing-price'];
+  //   });
+  //
+  //   var roomsOfPins = window.data.appartments.filter(function (pin) {
+  //     return pin.offer.rooms == filterState['housing-rooms'];
+  //   });
+  //
+  //   var questsOfPins = window.data.appartments.filter(function (pin) {
+  //     return pin.offer.guests == filterState['housing-guests'];
+  //   });
+  //
+  //   var featuresOfPins = window.data.appartments.filter(function (pin) {
+  //     return pin.offer.features === filterState['housing-features'];
+  //   });
+  //
+  //   var newPinsArray = typeOfPins;
+  //   newPinsArray = newPinsArray.concat(priceOfPins);
+  //   newPinsArray = newPinsArray.concat(roomsOfPins);
+  //   newPinsArray = newPinsArray.concat(questsOfPins);
+  //   newPinsArray = newPinsArray.concat(featuresOfPins);
+  //
+  //   return newPinsArray;
+  // };
 
 //  var filterPins = function () {
 //    var allow = false;
@@ -96,7 +151,6 @@
   typeFilter.addEventListener('change', function (evt) {
     filterState['housing-type'] = evt.target.value;
     //  перерисовываю метки
-    console.log(filterPins());
     window.pin.render(filterPins());
   });
 
@@ -104,7 +158,6 @@
   priceFilter.addEventListener('change', function (evt) {
     filterState['housing-price'] = evt.target.value;
     //  перерисовываю метки
-    console.log(filterPins());
     window.pin.render(filterPins());
   });
 
@@ -112,7 +165,6 @@
   roomsFilter.addEventListener('change', function (evt) {
     filterState['housing-rooms'] = evt.target.value;
     //  перерисовываю метки
-    console.log(filterPins());
     window.pin.render(filterPins());
   });
 
@@ -120,7 +172,6 @@
   questsFilter.addEventListener('change', function (evt) {
     filterState['housing-guests'] = evt.target.value;
     //  перерисовываю метки
-    console.log(filterPins());
     window.pin.render(filterPins());
   });
 
@@ -128,7 +179,6 @@
   featuresFilter.addEventListener('change', function (evt) {
     filterState['housing-features'].push(evt.target.value);
     //  перерисовываю метки
-    console.log(filterPins());
     window.pin.render(filterPins());
   });
 

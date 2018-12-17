@@ -39,12 +39,7 @@
     return pinElement;
   };
 
-  var isFirstStart = true;
   var render = function(appartments) {
-    if (isFirstStart) {
-      var appartments = window.data.appartments;
-      isFirstStart = false;
-    }
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < appartments.length; i++) {
       fragment.appendChild(renderPin(appartments[i], i));
