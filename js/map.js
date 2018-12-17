@@ -145,7 +145,8 @@
     mainMap: mainMap,
     similarListElement: similarListElement,
     pinHandler: pinHandler,
-    cardAvailable: cardAvailable
+    cardAvailable: cardAvailable,
+    addPinsClickHandler: addPinsClickHandler
   };
 
 })();
