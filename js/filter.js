@@ -14,7 +14,7 @@
     'housing-guests': 'any',
     'housing-features': []
   };
-  
+
   var filterPins = function () {
     var typeOfPins = window.data.appartments.filter(function (pin) {
       return pin.offer.type === filterState['housing-type'];
@@ -25,23 +25,23 @@
     });
 
     var roomsOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.rooms === filterState['housing-rooms'];
+      return pin.offer.rooms == filterState['housing-rooms'];
     });
 
     var questsOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.guests === filterState['housing-guests'];
+      return pin.offer.guests == filterState['housing-guests'];
     });
 
     var featuresOfPins = window.data.appartments.filter(function (pin) {
       return pin.offer.features === filterState['housing-features'];
     });
-    
+
     var newPinsArray = typeOfPins;
     newPinsArray = newPinsArray.concat(priceOfPins);
     newPinsArray = newPinsArray.concat(roomsOfPins);
     newPinsArray = newPinsArray.concat(questsOfPins);
     newPinsArray = newPinsArray.concat(featuresOfPins);
-    
+
     return newPinsArray;
   };
 
@@ -132,8 +132,8 @@
     window.pin.render(filterPins());
   });
 
-    
-  
+
+
 
 //    var pinsss = document.querySelectorAll('.map__pin');
 //    for (var i = 0; i < pinsss.length; i++) {
@@ -141,6 +141,6 @@
 //        window.map.addPinsClickHandler();
 //      });
 //    }
-    
-  
+
+
 })();
