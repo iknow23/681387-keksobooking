@@ -3,7 +3,6 @@
 
   var Price = {
     LOW: 10000,
-    MIDDLE: 30000,
     HIGH: 50000
   };
   var maxPins = 5;
@@ -23,6 +22,22 @@
 
   var filterPins = function () {
     var filteredArray = window.data.appartments.filter(function (pin) {
+
+      var priceApproval;
+      switch (filterState['housing-price']) {
+        case 'any':
+          priceApproval = true;
+          break;
+        case 'low':
+          priceApproval = pin.offer.price < Price.LOW;
+          break;
+        case 'middle':
+          priceApproval = pin.offer.price >= Price.LOW && pin.offer.price <= Price.HIGH;
+          break;
+        case 'high':
+          priceApproval = pin.offer.price > Price.HIGH;
+          break;
+      };
       var typeApproval = pin.offer.type === filterState['housing-type'] || filterState['housing-type'] === 'any';
       var roomsApproval = pin.offer.rooms === parseInt(filterState['housing-rooms']) || filterState['housing-rooms'] === 'any';
       var questsApproval = pin.offer.guests === parseInt(filterState['housing-guests']) || filterState['housing-guests'] === 'any';
@@ -33,7 +48,7 @@
       var featuresElevatorApproval = pin.offer.features.indexOf('elevator') !== -1 || filterState['filter-elevator'] === false;
       var featuresConditionerApproval = pin.offer.features.indexOf('conditioner') !== -1 || filterState['filter-conditioner'] === false;
 
-      if (typeApproval && roomsApproval && questsApproval && featuresWifiApproval && featuresDishwasherApproval && featuresParkingApproval && featuresWasherApproval && featuresElevatorApproval && featuresConditionerApproval) {
+      if (priceApproval && typeApproval && roomsApproval && questsApproval && featuresWifiApproval && featuresDishwasherApproval && featuresParkingApproval && featuresWasherApproval && featuresElevatorApproval && featuresConditionerApproval) {
         return pin;
       }
     });
@@ -47,7 +62,13 @@
     filterFormSelects[s].addEventListener('change', function (evt) {
       filterState[evt.target.id] = evt.target.value;
 
-      window.pin.render(filterPins().slice(0, maxPins));
+      if (filterPins().length) {
+        window.pin.render(filterPins().slice(0, maxPins));
+        window.map.addPinsClickHandler();
+      }
+      else {
+        window.pin.deletePins();
+      }
     });
   }
 
@@ -61,8 +82,7 @@
     }
 
     window.pin.render(filterPins().slice(0, maxPins));
+    window.map.addPinsClickHandler();
   });
-
-
 
 })();

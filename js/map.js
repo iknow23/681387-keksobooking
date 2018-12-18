@@ -43,8 +43,8 @@
         popupCloseButton.addEventListener('click', function () {
           deleteOpenedCard();
         });
-        document.addEventListener('keydown', function () {
-          if (evt.keyCode === window.data.Code.ESC) {
+        document.addEventListener('keydown', function (keyEvt) {
+          if (keyEvt.keyCode === window.data.Code.ESC) {
             deleteOpenedCard();
           }
         });
