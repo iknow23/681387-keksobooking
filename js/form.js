@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
 
   var mainForm = document.querySelector('.ad-form');

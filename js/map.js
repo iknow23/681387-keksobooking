@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
 
   var mainMap = document.querySelector('.map');
