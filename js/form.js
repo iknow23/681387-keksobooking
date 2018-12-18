@@ -149,8 +149,8 @@
         similarElement.removeChild(successElement);
       });
 
-      document.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.data.Code.ESC) {
+      document.addEventListener('keydown', function (event) {
+        if (event.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(successElement);
         }
       });
@@ -182,8 +182,8 @@
       button.addEventListener('click', function () {
         similarElement.removeChild(errorElement);
       });
-      document.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.data.Code.ESC) {
+      document.addEventListener('keydown', function (e) {
+        if (e.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(errorElement);
         }
       });
