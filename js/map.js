@@ -34,7 +34,7 @@
   var addPinsClickHandler = function () {
     var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinsList.length; i++) {
-      pinsList[i].addEventListener('click', function(evt) {
+      pinsList[i].addEventListener('click', function (evt) {
         var button = evt.currentTarget;
         var pinId = button.getAttribute('data-id');
         doCardJob(pinId);
@@ -101,10 +101,10 @@
       var bodyRect = document.body.getBoundingClientRect();
       var mapOverlay = document.querySelector('.map__overlay');
       var elemRect = mapOverlay.getBoundingClientRect();
-      var offsetLeft   = elemRect.left - bodyRect.left;
-      var offsetTop   = elemRect.top - bodyRect.top;
-      var offsetRight   = elemRect.right - bodyRect.left;
-      var offsetBottom   = elemRect.bottom - bodyRect.top;
+      var offsetLeft = elemRect.left - bodyRect.left;
+      var offsetTop = elemRect.top - bodyRect.top;
+      var offsetRight = elemRect.right - bodyRect.left;
+      var offsetBottom = elemRect.bottom - bodyRect.top;
 
       if (moveEvt.pageX < 200) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';

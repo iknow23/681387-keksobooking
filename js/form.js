@@ -82,7 +82,7 @@
   var typeOfRoomsSelect = document.querySelector('#type');
   var priceOfRoomsSelect = document.querySelector('#price');
 
-  //устанавливаю мин стоимость жилья в зависимости от типа
+  //  устанавливаю мин стоимость жилья в зависимости от типа
   var typeSelectHandler = function (evt) {
     var current = evt.currentTarget.selectedIndex;
 
@@ -117,9 +117,9 @@
       }
     }
 
-    for (var i = 0; i < timeOutSelectOptions.length; i++) {
-      if (timeOutSelectOptions[i].select) {
-        timeOutSelectOptions[i].removeAttribute('selected');
+    for (var k = 0; k < timeOutSelectOptions.length; k++) {
+      if (timeOutSelectOptions[k].select) {
+        timeOutSelectOptions[k].removeAttribute('selected');
       }
     }
 
@@ -127,11 +127,11 @@
     timeOutSelectOptions[current].selected = true;
   };
 
-  timeInSelect.addEventListener('change', function(evt) {
+  timeInSelect.addEventListener('change', function (evt) {
     selectHandler(evt, timeOutSelectOptions);
   });
 
-  timeOutSelect.addEventListener('change', function(evt) {
+  timeOutSelect.addEventListener('change', function (evt) {
     selectHandler(evt, timeInSelectOptions);
   });
 
@@ -145,11 +145,11 @@
 
       similarElement.appendChild(successElement);
 
-      document.addEventListener('click', function() {
+      document.addEventListener('click', function () {
         similarElement.removeChild(successElement);
       });
 
-      document.addEventListener('keydown', function(evt) {
+      document.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(successElement);
         }
@@ -158,7 +158,7 @@
       window.map.mainMap.classList.add('map--faded');
       window.map.cardAvailable();
 
-      var pinsElement = document.querySelector('.map__pins')
+      var pinsElement = document.querySelector('.map__pins');
       var pinsList = pinsElement.querySelectorAll('.map__pin:not(.map__pin--main)');
       for (var i = 0; i < pinsList.length; i++) {
         pinsElement.removeChild(pinsList[i]);
@@ -179,15 +179,15 @@
       similarElement.appendChild(errorElement);
 
       var button = errorElement.querySelector('.error__button');
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         similarElement.removeChild(errorElement);
       });
-      document.addEventListener('keydown', function(evt) {
+      document.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(errorElement);
         }
       });
-    }
+    };
 
     window.backend.upload(data, successHandler, errorHandler);
 
