@@ -7,7 +7,7 @@
   /**
   * скрытие карточки объявления
   */
-  var deleteOpenedCard = function() {
+  var deleteOpenedCard = function () {
     var mapCard = document.querySelector('.map__card');
     mainMap.removeChild(mapCard);
   };
@@ -19,22 +19,19 @@
       deleteOpenedCard();
     }
   };
-  /**
-  * рендер карточек объявлений при нажатии на метки
-  * @param  {number} pinId
-  * @return {Object} newCard
-  */
-  var doCardJob = function(pinId) {
+
+  //  рендер карточек объявлений при нажатии на метки
+  var doCardJob = function (pinId) {
     cardAvailable();
 
     var newCard = window.card(window.data.appartments[pinId]);
     mainMap.insertBefore(newCard, window.form.filter);
-  }
+  };
 
   /**
   * рендер карточек объявлений при нажатии на метки
   */
-  var addPinsClickHandler = function() {
+  var addPinsClickHandler = function () {
     var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinsList.length; i++) {
       pinsList[i].addEventListener('click', function(evt) {

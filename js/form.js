@@ -24,7 +24,7 @@
   /**
    * очистка полей
    */
-  var clearOptions = function() {
+  var clearOptions = function () {
     for (var i = 0; i < roomNumberOptions.length; i++) {
       roomNumberOptions[i].removeAttribute('selected');
       roomNumberOptions[i].removeAttribute('disabled');
@@ -33,10 +33,8 @@
     }
   };
 
-  /**
-   * синхронизация кол-ва комнат с кол-вом гостей
-   */
-  var roomNumberHandler = function(evt) {
+  //  синхронизация кол-ва комнат с кол-вом гостей
+  var roomNumberHandler = function (evt) {
     clearOptions();
     var current = evt.currentTarget.selectedIndex;
     if (current === 0) {
@@ -62,10 +60,8 @@
     }
   };
 
-  /**
-   * синхронизация кол-ва комнат с кол-вом гостей
-   */
-  var capacityHandler = function(evt) {
+  //  синхронизация кол-ва комнат с кол-вом гостей
+  var capacityHandler = function (evt) {
     clearOptions();
     var current = evt.currentTarget.selectedIndex;
     if (current === 0) {
@@ -85,10 +81,9 @@
   //  работа с полями 'тип жилья' и 'цена за ночь'
   var typeOfRoomsSelect = document.querySelector('#type');
   var priceOfRoomsSelect = document.querySelector('#price');
-  /**
-   * устанавливаю мин стоимость жилья в зависимости от типа
-   */
-  var typeSelectHandler = function(evt) {
+
+  //устанавливаю мин стоимость жилья в зависимости от типа
+  var typeSelectHandler = function (evt) {
     var current = evt.currentTarget.selectedIndex;
 
     if (current === 0) {
@@ -114,18 +109,16 @@
   var timeInSelectOptions = timeInSelect.querySelectorAll('option');
   var timeOutSelectOptions = timeOutSelect.querySelectorAll('option');
 
-  /**
-   * синхронизация полей времени заезда/выезда
-   */
-  var selectHandler = function(evt, timeOutSelectOptions) {
+  //  синхронизация полей времени заезда/выезда
+  var selectHandler = function (evt, timeOutSelectOptions) {
     for (var i = 0; i < timeInSelectOptions.length; i++) {
-      if(timeInSelectOptions[i].select) {
+      if (timeInSelectOptions[i].select) {
         timeInSelectOptions[i].removeAttribute('selected');
       }
     }
 
     for (var i = 0; i < timeOutSelectOptions.length; i++) {
-      if(timeOutSelectOptions[i].select) {
+      if (timeOutSelectOptions[i].select) {
         timeOutSelectOptions[i].removeAttribute('selected');
       }
     }
@@ -190,7 +183,7 @@
         similarElement.removeChild(errorElement);
       });
       document.addEventListener('keydown', function(evt) {
-        if(evt.keyCode === window.data.Code.ESC) {
+        if (evt.keyCode === window.data.Code.ESC) {
           similarElement.removeChild(errorElement);
         }
       });
@@ -201,13 +194,13 @@
     evt.preventDefault();
   });
 
-  var enable = function() {
+  var enable = function () {
     for (var i = 0; i < formElements.length; i++) {
       formElements[i].disabled = false;
     }
   };
 
-  var disable = function() {
+  var disable = function () {
     for (var i = 0; i < formElements.length; i++) {
       formElements[i].disabled = true;
     }

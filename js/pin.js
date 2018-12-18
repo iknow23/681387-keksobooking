@@ -4,18 +4,13 @@
   //  создание меток объявлений
   var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  /**
-   * рендер меток
-   * @param  {Object} appartments[i]
-   * @param  {index} i
-   * @return {Object}
-   */
+  //  рендер меток
   var renderPin = function (appartment, index) {
     //  скрытие карточки объявления
     window.map.cardAvailable();
 
     //  скрытие меток объявлений
-    var deletePins = function() {
+    var deletePins = function () {
       var pinsMap = document.querySelector('.map__pins');
       var pinsList = document.querySelectorAll('.map__pin:not(.map__pin--main)');
       for (var i = 0; i < pinsList.length; i++) {
@@ -39,7 +34,7 @@
     return pinElement;
   };
 
-  var render = function(appartments) {
+  var render = function (appartments) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < appartments.length; i++) {
       fragment.appendChild(renderPin(appartments[i], i));
