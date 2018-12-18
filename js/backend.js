@@ -1,5 +1,5 @@
+'use strict';
 (function () {
-  'use strict';
 
   var Url = {
     LOAD: 'https://js.dump.academy/keksobooking/data',
@@ -12,7 +12,6 @@
    * получение данных с сервера
    * @param  {function} onLoad
    * @param  {function} onError
-   * @return {array}
    */
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -45,7 +44,6 @@
    * @param  {object} data
    * @param  {function} onLoad
    * @param  {function} onError
-   * @return {array}
    */
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
