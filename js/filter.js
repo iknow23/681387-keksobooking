@@ -37,7 +37,7 @@
         case 'high':
           priceApproval = pin.offer.price > Price.HIGH;
           break;
-      };
+      }
       var typeApproval = pin.offer.type === filterState['housing-type'] || filterState['housing-type'] === 'any';
       var roomsApproval = pin.offer.rooms === parseInt(filterState['housing-rooms']) || filterState['housing-rooms'] === 'any';
       var questsApproval = pin.offer.guests === parseInt(filterState['housing-guests']) || filterState['housing-guests'] === 'any';
@@ -65,8 +65,7 @@
       if (filterPins().length) {
         window.pin.render(filterPins().slice(0, maxPins));
         window.map.addPinsClickHandler();
-      }
-      else {
+      } else {
         window.pin.deletePins();
       }
     });
