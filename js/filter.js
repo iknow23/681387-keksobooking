@@ -1,196 +1,152 @@
 (function () {
   'use strict';
 
+  var Price = {
+    LOW: 10000,
+    MIDDLE: 30000,
+    HIGH: 50000
+  };
+  
   /**
    * рендерит пины на карте
    * @param  {array} pins
    * @return {array}
    */
-
   var filterState = {
     'housing-type': 'any',
     'housing-price': 'any',
     'housing-rooms': 'any',
     'housing-guests': 'any',
-    'housing-features': []
+    'filter-wifi': false,
+    'filter-dishwasher': false,
+    'filter-parking': false,
+    'filter-washer': false,
+    'filter-elevator': false,
+    'filter-conditioner': false
   };
 
   var filterPins = function () {
-    var typeOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.type === filterState['housing-type'];
+    var filteredArray = window.data.appartments.filter(function (pin) {
+      if (pin.offer.type === filterState['housing-type'] || filterState['housing-type'] === 'any') {
+        if (pin.offer.price === filterState['housing-price'] || filterState['housing-price'] === 'any') {
+          if (pin.offer.rooms == filterState['housing-rooms'] || filterState['housing-rooms'] === 'any') {
+            if (pin.offer.guests == filterState['housing-guests'] || filterState['housing-guests'] === 'any') {
+              if (pin.offer.features.indexOf('wifi') !== -1 || filterState['filter-wifi'] === false) {
+                if (pin.offer.features.indexOf('dishwasher') !== -1 || filterState['filter-dishwasher'] === false) {
+                  if (pin.offer.features.indexOf('parking') !== -1 || filterState['filter-parking'] === false) {
+                    if (pin.offer.features.indexOf('washer') !== -1 || filterState['filter-washer'] === false) {
+                      if (pin.offer.features.indexOf('elevator') !== -1 || filterState['filter-elevator'] === false) {
+                        if (pin.offer.features.indexOf('conditioner') !== -1 || filterState['hfilter-conditioner'] === false) {
+                          return true;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     });
-
-    var priceOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.price === filterState['housing-price'];
-    });
-
-    var roomsOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.rooms == filterState['housing-rooms'];
-    });
-
-    var questsOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.guests == filterState['housing-guests'];
-    });
-
-    var featuresOfPins = window.data.appartments.filter(function (pin) {
-      return pin.offer.features === filterState['housing-features'];
-    });
-
-    var newPinsArray = typeOfPins;
-    newPinsArray = newPinsArray.concat(priceOfPins);
-    newPinsArray = newPinsArray.concat(roomsOfPins);
-    newPinsArray = newPinsArray.concat(questsOfPins);
-    newPinsArray = newPinsArray.concat(featuresOfPins);
-
-    // var newPins;
-    // if ( (typeFilter.checked = true) && (roomsFilter.checked = true) ) {
-    //   newPins = newPinsArray.filter(function (pin) {
-    //     return pin.offer.type === filterState['housing-type'] &&
-    //     pin.offer.rooms == filterState['housing-rooms'];
-    //   });
-    // } else
-    // if (typeFilter.checked = true) {
-    //   newPins = newPinsArray.filter(function (pin) {
-    //     return pin.offer.type === filterState['housing-type'];
-    //   });
-    // }
-
-    return newPinsArray;
+    
+    return filteredArray;
   };
 
-  // var filterPins = function () {
-  //   var newPinsArray = window.data.appartments.filter(function (pin) {
-  //     if (pin.offer.type === filterState['housing-type']) {
-  //       return pin.offer.type === filterState['housing-type'];
-  //     } else
-  //     if (pin.offer.type === filterState['housing-type'] && pin.offer.rooms == filterState['housing-rooms']) {
-  //       return pin.offer.rooms == filterState['housing-rooms'] && pin.offer.type === filterState['housing-type'];
-  //     }
-  //   });
-  //   return newPinsArray;
-  // };
-
-  // var filterPins = function () {
-  //   var typeOfPins = window.data.appartments.filter(function (pin) {
-  //     return pin.offer.type === filterState['housing-type'];
-  //   });
-  //
-  //   var priceOfPins = window.data.appartments.filter(function (pin) {
-  //     return pin.offer.price === filterState['housing-price'];
-  //   });
-  //
-  //   var roomsOfPins = window.data.appartments.filter(function (pin) {
-  //     return pin.offer.rooms == filterState['housing-rooms'];
-  //   });
-  //
-  //   var questsOfPins = window.data.appartments.filter(function (pin) {
-  //     return pin.offer.guests == filterState['housing-guests'];
-  //   });
-  //
-  //   var featuresOfPins = window.data.appartments.filter(function (pin) {
-  //     return pin.offer.features === filterState['housing-features'];
-  //   });
-  //
-  //   var newPinsArray = typeOfPins;
-  //   newPinsArray = newPinsArray.concat(priceOfPins);
-  //   newPinsArray = newPinsArray.concat(roomsOfPins);
-  //   newPinsArray = newPinsArray.concat(questsOfPins);
-  //   newPinsArray = newPinsArray.concat(featuresOfPins);
-  //
-  //   return newPinsArray;
-  // };
-
-//  var filterPins = function () {
-//    var allow = false;
-//    var newPinsArray = window.data.appartments.filter(function (pin) {
-//      debugger;
-//      if (pin.offer.type === filterState['housing-type']) {
-//        allow = true;
-//      }
-//      if (pin.offer.price === filterState['housing-price']) {
-//        allow = true;
-//      }
-//      if (pin.offer.rooms === filterState['housing-rooms']) {
-//        allow = true;
-//      }
-//      if (pin.offer.guests === filterState['housing-guests']) {
-//        allow = true;
-//      }
-//      if (pin.offer.features === filterState['housing-features']) {
-//        allow = true;
-//      }
-//      return true;
-//    });
-//    return newPinsArray;
-//  };
-
-//  var filterPins = function () {
-//    var newPinsArray = window.data.appartments.filter(function (pin) {
-//      if (pin.offer.type === filterState['housing-type']) {
-//        return pin.offer.type === filterState['housing-type'];
-//        if (pin.offer.price === filterState['housing-price']) {
-//          return pin.offer.price === filterState['housing-price'];
-//          if (pin.offer.rooms === filterState['housing-rooms']) {
-//            return pin.offer.rooms === filterState['housing-rooms'];
-//            if (pin.offer.guests === filterState['housing-guests']) {
-//              return pin.offer.guests === filterState['housing-guests'];
-//              if (pin.offer.features === filterState['housing-features']) {
-//                return pin.offer.features === filterState['housing-features'];
-//              }
-//            }
-//          }
-//        }
-//      }
-//    });
-//    return newPinsArray;
-//  };
-
-
   //  ловлю изменения пользователя и обновляю filterState
-  var typeFilter = document.querySelector('#housing-type');
-  typeFilter.addEventListener('change', function (evt) {
-    filterState['housing-type'] = evt.target.value;
-    //  перерисовываю метки
-    window.pin.render(filterPins());
-  });
+  var filterFormSelects = document.querySelectorAll('.map__filters select');
+  for (var s = 0; s < filterFormSelects.length; s++) {
+    filterFormSelects[s].addEventListener('change', function (evt) {
+      filterState[evt.target.id] = evt.target.value;
+            
+      switch (evt.target.value) {
+        case 'any':
+          filterState['housing-price'] = 'any';
+          break;
+        case 'low':
+          filterState['housing-price'] = Price.LOW;
+          break;
+        case 'middle':
+          filterState['housing-price'] = Price.MIDDLE;
+          break;
+        case 'high':
+          filterState['housing-price'] = Price.HIGH;
+          break;
+      }
 
-  var priceFilter = document.querySelector('#housing-price');
-  priceFilter.addEventListener('change', function (evt) {
-    filterState['housing-price'] = evt.target.value;
-    //  перерисовываю метки
-    window.pin.render(filterPins());
-  });
+      window.pin.render(filterPins());
+    });
+  }
 
-  var roomsFilter = document.querySelector('#housing-rooms');
-  roomsFilter.addEventListener('change', function (evt) {
-    filterState['housing-rooms'] = evt.target.value;
-    //  перерисовываю метки
-    window.pin.render(filterPins());
-  });
+//  --------------короткая запись слушателя на чекбоксы----------------------
+  var filterFormCheckbox = document.querySelectorAll('.map__checkbox');
+  for (var j = 0; j < filterFormCheckbox.length; j++) {
+    filterFormCheckbox[j].addEventListener('change', function (evt) {
+      filterState[evt.target.id] = true;
+      window.pin.render(filterPins());
+    });
+  }
 
-  var questsFilter = document.querySelector('#housing-guests');
-  questsFilter.addEventListener('change', function (evt) {
-    filterState['housing-guests'] = evt.target.value;
-    //  перерисовываю метки
-    window.pin.render(filterPins());
-  });
-
-  var featuresFilter = document.querySelector('#housing-features');
-  featuresFilter.addEventListener('change', function (evt) {
-    filterState['housing-features'].push(evt.target.value);
-    //  перерисовываю метки
-    window.pin.render(filterPins());
-  });
-
-
-
-
-//    var pinsss = document.querySelectorAll('.map__pin');
-//    for (var i = 0; i < pinsss.length; i++) {
-//      pinsss[i].addEventListener('click', function(evt) {
-//        window.map.addPinsClickHandler();
-//      });
+//  --------------длинная запись слушателя на чекбоксы----------------------
+//  var filterFormCheckboxWifi = document.querySelector('#filter-wifi');
+//  filterFormCheckboxWifi.addEventListener('change', function (evt) {
+//    if (filterState['housing-features-wifi'] === false) {
+//      filterState['housing-features-wifi'] = true;
+//    } else {
+//      filterState['housing-features-wifi'] = false;
 //    }
+//    window.pin.render(filterPins());
+//  });
+//  
+//  var filterFormCheckboxDishwasher = document.querySelector('#filter-dishwasher');
+//  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
+//    if (filterState['housing-features-dishwasher'] === false) {
+//      filterState['housing-features-dishwasher'] = true;
+//    } else {
+//      filterState['housing-features-dishwasher'] = false;
+//    }
+//    window.pin.render(filterPins());
+//  });
+//  
+//  var filterFormCheckboxDishwasher = document.querySelector('#filter-parking');
+//  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
+//    if (filterState['housing-features-parking'] === false) {
+//      filterState['housing-features-parking'] = true;
+//    } else {
+//      filterState['housing-features-parking'] = false;
+//    }
+//    window.pin.render(filterPins());
+//  });
+//  
+//  var filterFormCheckboxDishwasher = document.querySelector('#filter-washer');
+//  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
+//    if (filterState['housing-features-washer'] === false) {
+//      filterState['housing-features-washer'] = true;
+//    } else {
+//      filterState['housing-features-washer'] = false;
+//    }
+//    window.pin.render(filterPins());
+//  });
+//  
+//  var filterFormCheckboxDishwasher = document.querySelector('#filter-elevator');
+//  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
+//    if (filterState['housing-features-elevator'] === false) {
+//      filterState['housing-features-elevator'] = true;
+//    } else {
+//      filterState['housing-features-elevator'] = false;
+//    }
+//    window.pin.render(filterPins());
+//  });
+//  
+//  var filterFormCheckboxDishwasher = document.querySelector('#filter-conditioner');
+//  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
+//    if (filterState['housing-features-conditioner'] === false) {
+//      filterState['housing-features-conditioner'] = true;
+//    } else {
+//      filterState['housing-features-conditioner'] = false;
+//    }
+//    window.pin.render(filterPins());
+//  });
 
 
 })();
