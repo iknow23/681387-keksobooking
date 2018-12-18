@@ -1,5 +1,5 @@
+'use strict';
 (function () {
-  'use strict';
 
   //  создание меток объявлений
   var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');

@@ -1,5 +1,5 @@
+'use strict';
 (function () {
-  'use strict';
 
   var mainForm = document.querySelector('.ad-form');
   var filter = document.querySelector('.map__filters-container');
@@ -11,11 +11,6 @@
     formElements[j].disabled = true;
   }
 
-  /**
-   * заполнение координат метки в поле формы
-   * @param {number} left, top
-   * @return {numbers}
-   */
   var fillAdress = function (left, top) {
     var inputAdress = document.querySelector('#address');
     inputAdress.value = left + ', ' + top;

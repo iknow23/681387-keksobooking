@@ -1,5 +1,5 @@
+'use strict';
 (function () {
-  'use strict';
 
   var Code = {
     ESC: 27,

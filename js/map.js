@@ -1,5 +1,5 @@
+'use strict';
 (function () {
-  'use strict';
 
   var mainMap = document.querySelector('.map');
   var similarListElement = document.querySelector('.map__pins');
