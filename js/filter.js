@@ -6,7 +6,7 @@
     MIDDLE: 30000,
     HIGH: 50000
   };
-  
+
   /**
    * рендерит пины на карте
    * @param  {array} pins
@@ -36,7 +36,7 @@
                   if (pin.offer.features.indexOf('parking') !== -1 || filterState['filter-parking'] === false) {
                     if (pin.offer.features.indexOf('washer') !== -1 || filterState['filter-washer'] === false) {
                       if (pin.offer.features.indexOf('elevator') !== -1 || filterState['filter-elevator'] === false) {
-                        if (pin.offer.features.indexOf('conditioner') !== -1 || filterState['hfilter-conditioner'] === false) {
+                        if (pin.offer.features.indexOf('conditioner') !== -1 || filterState['filter-conditioner'] === false) {
                           return true;
                         }
                       }
@@ -49,7 +49,7 @@
         }
       }
     });
-    
+
     return filteredArray;
   };
 
@@ -58,19 +58,19 @@
   for (var s = 0; s < filterFormSelects.length; s++) {
     filterFormSelects[s].addEventListener('change', function (evt) {
       filterState[evt.target.id] = evt.target.value;
-            
+
       switch (evt.target.value) {
         case 'any':
           filterState['housing-price'] = 'any';
           break;
         case 'low':
-          filterState['housing-price'] = Price.LOW;
+          filterState['housing-price'] = pin.offer.price <= Price.LOW;
           break;
         case 'middle':
-          filterState['housing-price'] = Price.MIDDLE;
+          filterState['housing-price'] = pin.offer.price >= Price.LOW && pin.offer.price <= Price.MIDDLE;
           break;
         case 'high':
-          filterState['housing-price'] = Price.HIGH;
+          filterState['housing-price'] = pin.offer.price >= Price.HIGH;
           break;
       }
 
@@ -97,7 +97,7 @@
 //    }
 //    window.pin.render(filterPins());
 //  });
-//  
+//
 //  var filterFormCheckboxDishwasher = document.querySelector('#filter-dishwasher');
 //  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
 //    if (filterState['housing-features-dishwasher'] === false) {
@@ -107,7 +107,7 @@
 //    }
 //    window.pin.render(filterPins());
 //  });
-//  
+//
 //  var filterFormCheckboxDishwasher = document.querySelector('#filter-parking');
 //  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
 //    if (filterState['housing-features-parking'] === false) {
@@ -117,7 +117,7 @@
 //    }
 //    window.pin.render(filterPins());
 //  });
-//  
+//
 //  var filterFormCheckboxDishwasher = document.querySelector('#filter-washer');
 //  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
 //    if (filterState['housing-features-washer'] === false) {
@@ -127,7 +127,7 @@
 //    }
 //    window.pin.render(filterPins());
 //  });
-//  
+//
 //  var filterFormCheckboxDishwasher = document.querySelector('#filter-elevator');
 //  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
 //    if (filterState['housing-features-elevator'] === false) {
@@ -137,7 +137,7 @@
 //    }
 //    window.pin.render(filterPins());
 //  });
-//  
+//
 //  var filterFormCheckboxDishwasher = document.querySelector('#filter-conditioner');
 //  filterFormCheckboxDishwasher.addEventListener('change', function (evt) {
 //    if (filterState['housing-features-conditioner'] === false) {
