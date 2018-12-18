@@ -57,7 +57,7 @@
 
   var successHandler = function (appartments) {
     window.data.appartments = appartments;
-    window.pin.render(appartments);
+    window.pin.render(appartments.slice(0, 5));
 
     window.form.enable();
 
