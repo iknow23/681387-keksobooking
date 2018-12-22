@@ -83,23 +83,18 @@
   var typeOfRoomsSelect = document.querySelector('#type');
   var priceOfRoomsSelect = document.querySelector('#price');
 
+  var typeCostMap = {
+    0: 0,
+    1: 1000,
+    2: 5000,
+    3: 10000
+  };
+
   //  устанавливаю мин стоимость жилья в зависимости от типа
   var typeSelectHandler = function (evt) {
     var current = evt.currentTarget.selectedIndex;
-
-    if (current === 0) {
-      priceOfRoomsSelect.setAttribute('min', 0);
-      priceOfRoomsSelect.setAttribute('placeholder', 0);
-    } else if (current === 1) {
-      priceOfRoomsSelect.setAttribute('min', 1000);
-      priceOfRoomsSelect.setAttribute('placeholder', 1000);
-    } else if (current === 2) {
-      priceOfRoomsSelect.setAttribute('min', 5000);
-      priceOfRoomsSelect.setAttribute('placeholder', 5000);
-    } else if (current === 3) {
-      priceOfRoomsSelect.setAttribute('min', 10000);
-      priceOfRoomsSelect.setAttribute('placeholder', 10000);
-    }
+    priceOfRoomsSelect.setAttribute('min', typeCostMap[current]);
+    priceOfRoomsSelect.setAttribute('placeholder', typeCostMap[current]);
   };
 
   typeOfRoomsSelect.addEventListener('change', typeSelectHandler);
@@ -107,39 +102,20 @@
   //  работа с полями времени заезда/выезда
   var timeInSelect = document.querySelector('#timein');
   var timeOutSelect = document.querySelector('#timeout');
-  var timeInSelectOptions = timeInSelect.querySelectorAll('option');
-  var timeOutSelectOptions = timeOutSelect.querySelectorAll('option');
 
   //  синхронизация полей времени заезда/выезда
-  var selectHandler = function (evt, timeOutSelectOptions) {
-    for (var i = 0; i < timeInSelectOptions.length; i++) {
-      if (timeInSelectOptions[i].select) {
-        timeInSelectOptions[i].removeAttribute('selected');
-      }
-    }
-
-    for (var k = 0; k < timeOutSelectOptions.length; k++) {
-      if (timeOutSelectOptions[k].select) {
-        timeOutSelectOptions[k].removeAttribute('selected');
-      }
-    }
-
-    var current = evt.currentTarget.selectedIndex;
-    timeOutSelectOptions[current].selected = true;
-  };
-
-  timeInSelect.addEventListener('change', function (evt) {
-    selectHandler(evt, timeOutSelectOptions);
+  timeInSelect.addEventListener('change', function () {
+    timeOutSelect.value = timeInSelect.value;
   });
 
-  timeOutSelect.addEventListener('change', function (evt) {
-    selectHandler(evt, timeInSelectOptions);
+  timeOutSelect.addEventListener('change', function () {
+    timeInSelect.value = timeOutSelect.value;
   });
 
   mainForm.addEventListener('submit', function (evt) {
     var data = new FormData(mainForm);
 
-    var successHandler = function (response) {
+    var successHandler = function () {
       var similarElement = document.querySelector('main');
       var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
       var successElement = similarSuccessTemplate.cloneNode(true);
@@ -172,7 +148,7 @@
       disable();
     };
 
-    var errorHandler = function (errorMessage) {
+    var errorHandler = function () {
       var similarElement = document.querySelector('main');
       var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
       var errorElement = similarErrorTemplate.cloneNode(true);

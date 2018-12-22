@@ -24,6 +24,8 @@
   var filterPins = function () {
     var filteredArray = window.data.appartments.filter(function (pin) {
 
+      var result = false;
+
       var priceApproval;
       switch (filterState['housing-price']) {
         case 'any':
@@ -40,8 +42,8 @@
           break;
       }
       var typeApproval = pin.offer.type === filterState['housing-type'] || filterState['housing-type'] === 'any';
-      var roomsApproval = pin.offer.rooms === parseInt(filterState['housing-rooms']) || filterState['housing-rooms'] === 'any';
-      var questsApproval = pin.offer.guests === parseInt(filterState['housing-guests']) || filterState['housing-guests'] === 'any';
+      var roomsApproval = pin.offer.rooms === parseInt(filterState['housing-rooms'], 10) || filterState['housing-rooms'] === 'any';
+      var questsApproval = pin.offer.guests === parseInt(filterState['housing-guests'], 10) || filterState['housing-guests'] === 'any';
       var featuresWifiApproval = pin.offer.features.indexOf('wifi') !== -1 || filterState['filter-wifi'] === false;
       var featuresDishwasherApproval = pin.offer.features.indexOf('dishwasher') !== -1 || filterState['filter-dishwasher'] === false;
       var featuresParkingApproval = pin.offer.features.indexOf('parking') !== -1 || filterState['filter-parking'] === false;
@@ -50,8 +52,10 @@
       var featuresConditionerApproval = pin.offer.features.indexOf('conditioner') !== -1 || filterState['filter-conditioner'] === false;
 
       if (priceApproval && typeApproval && roomsApproval && questsApproval && featuresWifiApproval && featuresDishwasherApproval && featuresParkingApproval && featuresWasherApproval && featuresElevatorApproval && featuresConditionerApproval) {
-        return pin;
+        result = true;
       }
+
+      return result;
     });
 
     return filteredArray;

@@ -66,7 +66,7 @@
         var imgAlt = img.getAttribute('alt');
 
         cardAvailable();
-        var object = data.appartments.find(function (pin) {
+        var object = window.data.appartments.find(function (pin) {
           return pin.offer.title === imgAlt;
         });
         var newCard = window.card(object);
