@@ -1,11 +1,15 @@
-(function () {
-  'use strict';
+'use strict';
 
-  var ESC = 27;
+(function () {
+
+  var Code = {
+    ESC: 27,
+    ENTER: 23
+  };
   var appartments = [];
 
   window.data = {
-    ESC: ESC,
+    Code: Code,
     appartments: appartments
   };
 

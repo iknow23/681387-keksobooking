@@ -1,5 +1,6 @@
+'use strict';
+
 (function () {
-  'use strict';
 
   var errorHandler = function (errorMessage) {
     var node = document.createElement('div');

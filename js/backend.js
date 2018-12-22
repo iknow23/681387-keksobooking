@@ -1,8 +1,11 @@
-(function () {
-  'use strict';
+'use strict';
 
-  var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
-  var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
+(function () {
+
+  var Url = {
+    LOAD: 'https://js.dump.academy/keksobooking/data',
+    UPLOAD: 'https://js.dump.academy/keksobooking'
+  };
   var STATUS_GOOD = 200;
   var TEN_SECONDS = 10000;
 
@@ -10,7 +13,6 @@
    * получение данных с сервера
    * @param  {function} onLoad
    * @param  {function} onError
-   * @return {array}
    */
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -34,7 +36,7 @@
 
     xhr.timeout = TEN_SECONDS;
 
-    xhr.open('GET', LOAD_URL);
+    xhr.open('GET', Url.LOAD);
     xhr.send();
   };
 
@@ -43,7 +45,6 @@
    * @param  {object} data
    * @param  {function} onLoad
    * @param  {function} onError
-   * @return {array}
    */
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -61,7 +62,7 @@
       onError('Произошла ошибка');
     });
 
-    xhr.open('POST', UPLOAD_URL);
+    xhr.open('POST', Url.UPLOAD);
     xhr.send(data);
   };
 
