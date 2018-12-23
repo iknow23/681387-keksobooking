@@ -53,38 +53,6 @@
     }
   };
 
-  //  Влад, эта функция для открывания карточки после применения фильтров. Она такая же как и выше.
-  //  Отличия в том, что в функции идёт поиск/соответствие пина с карточкой по data-id, а в этой функции по alt, т.к. после применения фильтра data-id переписываются и идёт несоответствие.
-  //  Почему переписываю функцию, т.к. функция выше для рендера карточки принимает на вход объект, а в этой функции (при поиске по alt
-  //  на вход принимается массив из одного объекта. Поэтому из него делаю объект - строка 69)
-  var addPinsClickHandler2 = function () {
-    var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < pinsList.length; i++) {
-      pinsList[i].addEventListener('click', function (evt) {
-        var button = evt.currentTarget;
-        var img = button.querySelector('img');
-        var imgAlt = img.getAttribute('alt');
-
-        cardAvailable();
-        var object = window.data.appartments.find(function (pin) {
-          return pin.offer.title === imgAlt;
-        });
-        var newCard = window.card(object);
-        mainMap.insertBefore(newCard, window.form.filter);
-
-        var popupCloseButton = document.querySelector('.popup__close');
-        popupCloseButton.addEventListener('click', function () {
-          deleteOpenedCard();
-        });
-        document.addEventListener('keydown', function (keyEvt) {
-          if (keyEvt.keyCode === window.data.Code.ESC) {
-            deleteOpenedCard();
-          }
-        });
-      });
-    }
-  };
-
   //  активация карты и DRAG-N-DROP
   var pinHandler = document.querySelector('.map__pin--main');
 
@@ -176,8 +144,7 @@
     similarListElement: similarListElement,
     pinHandler: pinHandler,
     cardAvailable: cardAvailable,
-    addPinsClickHandler: addPinsClickHandler,
-    addPinsClickHandler2: addPinsClickHandler2
+    addPinsClickHandler: addPinsClickHandler
   };
 
 })();

@@ -69,7 +69,7 @@
 
       if (filterPins().length) {
         window.pin.render(filterPins().slice(0, maxPins));
-        window.map.addPinsClickHandler2();
+        window.map.addPinsClickHandler();
       } else {
         window.pin.deletePins();
       }
@@ -86,7 +86,7 @@
     }
 
     window.pin.render(filterPins().slice(0, maxPins));
-    window.map.addPinsClickHandler2();
+    window.map.addPinsClickHandler();
   });
 
 })();

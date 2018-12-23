@@ -42,7 +42,10 @@
   var render = function (appartments) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < appartments.length; i++) {
-      fragment.appendChild(renderPin(appartments[i], i));
+
+      var realIndex = window.data.appartments.indexOf(appartments[i]);
+
+      fragment.appendChild(renderPin(appartments[i], realIndex));
     }
     window.map.similarListElement.appendChild(fragment);
   };
