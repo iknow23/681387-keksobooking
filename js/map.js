@@ -144,7 +144,8 @@
     similarListElement: similarListElement,
     pinHandler: pinHandler,
     cardAvailable: cardAvailable,
-    addPinsClickHandler: addPinsClickHandler
+    addPinsClickHandler: addPinsClickHandler,
+    successHandler: successHandler
   };
 
 })();

@@ -3,7 +3,6 @@
 (function () {
 
   var mainForm = document.querySelector('.ad-form');
-  var filter = document.querySelector('.map__filters-container');
 
   //  активация страницы, отключаю все элементы ввода формы
   var formElements = document.querySelectorAll('fieldset');
@@ -17,67 +16,41 @@
     inputAdress.value = left + ', ' + top;
   };
 
-  //  работа с полями 'кол-во комнат' и 'кол-во мест'
+  //  синхронизация кол-ва комнат с кол-вом гостей
+  var OfferRoomsCapacity = {
+    '1': ['1'],
+    '2': ['2', '1'],
+    '3': ['3', '2', '1'],
+    '100': ['0']
+  };
+
+  var NO_GUESTS_ALLOWED = 100;
+
   var roomNumberSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
-  var roomNumberOptions = roomNumberSelect.querySelectorAll('option');
   var capacityOptions = capacitySelect.querySelectorAll('option');
-  /**
-   * очистка полей
-   */
-  var clearOptions = function () {
-    for (var i = 0; i < roomNumberOptions.length; i++) {
-      roomNumberOptions[i].removeAttribute('selected');
-      roomNumberOptions[i].removeAttribute('disabled');
-      capacityOptions[i].removeAttribute('selected');
-      capacityOptions[i].removeAttribute('disabled');
+
+  var updateCapacity = function () {
+    var selectedRooms = parseInt(roomNumberSelect.options[roomNumberSelect.selectedIndex].value, 10);
+    var allowedGuests = OfferRoomsCapacity[selectedRooms];
+
+    capacitySelect.value = selectedRooms;
+
+    if (selectedRooms === NO_GUESTS_ALLOWED) {
+      capacitySelect.value = 0;
     }
+
+    capacityOptions.forEach(function (item) {
+      item.disabled = true;
+
+      if (allowedGuests.indexOf(item.value) !== -1) {
+        item.disabled = false;
+      }
+    });
   };
 
-  //  синхронизация кол-ва комнат с кол-вом гостей
-  var roomNumberHandler = function (evt) {
-    clearOptions();
-    var current = evt.currentTarget.selectedIndex;
-    if (current === 0) {
-      capacityOptions[0].disabled = true;
-      capacityOptions[1].disabled = true;
-      capacityOptions[2].selected = true;
-      capacityOptions[3].disabled = true;
-    } else if (current === 1) {
-      capacityOptions[0].disabled = true;
-      capacityOptions[1].selected = true;
-      capacityOptions[2].selected = true;
-      capacityOptions[3].disabled = true;
-    } else if (current === 2) {
-      capacityOptions[0].selected = true;
-      capacityOptions[1].selected = true;
-      capacityOptions[2].selected = true;
-      capacityOptions[3].disabled = true;
-    } else if (current === 3) {
-      capacityOptions[0].disabled = true;
-      capacityOptions[1].disabled = true;
-      capacityOptions[2].disabled = true;
-      capacityOptions[3].selected = true;
-    }
-  };
-
-  //  синхронизация кол-ва комнат с кол-вом гостей
-  var capacityHandler = function (evt) {
-    clearOptions();
-    var current = evt.currentTarget.selectedIndex;
-    if (current === 0) {
-      roomNumberOptions[2].selected = true;
-    } else if (current === 1) {
-      roomNumberOptions[1].selected = true;
-    } else if (current === 2) {
-      roomNumberOptions[0].selected = true;
-    } else if (current === 3) {
-      roomNumberOptions[3].selected = true;
-    }
-  };
-
-  roomNumberSelect.addEventListener('change', roomNumberHandler);
-  capacitySelect.addEventListener('change', capacityHandler);
+  roomNumberSelect.addEventListener('change', updateCapacity);
+  capacitySelect.addEventListener('change', updateCapacity);
 
   //  работа с полями 'тип жилья' и 'цена за ночь'
   var typeOfRoomsSelect = document.querySelector('#type');
@@ -146,6 +119,8 @@
       mainForm.classList.add('ad-form--disabled');
       mainForm.reset();
       disable();
+
+      window.map.pinHandler.addEventListener('click', window.map.successHandler);
     };
 
     var errorHandler = function () {
@@ -185,7 +160,6 @@
 
   window.form = {
     mainForm: mainForm,
-    filter: filter,
     fillAdress: fillAdress,
     enable: enable
   };
