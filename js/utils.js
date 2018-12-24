@@ -16,7 +16,7 @@
   };
 
   var lastTimeout;
-  var DEBOUNCE_INTERVAL = 3000;
+  var DEBOUNCE_INTERVAL = 1200;
 
   var debounce = function (callback) {
     if (lastTimeout) {

@@ -63,39 +63,36 @@
     return filteredArray;
   };
 
-  var changeFlterFormElement = function () {
-    //  ловлю изменения пользователя на всех select
-    var filterFormSelects = document.querySelectorAll('.map__filters select');
-    for (var s = 0; s < filterFormSelects.length; s++) {
-      filterFormSelects[s].addEventListener('change', function (evt) {
-
-        filterState[evt.target.id] = evt.target.value;
-
-        if (filterPins().length) {
-          window.pin.render(filterPins().slice(0, maxPins));
-          window.map.addPinsClickHandler();
-        } else {
-          window.pin.deletePins();
-        }
-      });
-    }
-
-    //  ловлю изменения пользователя на чекбоксах
-    var filterFormCheckbox = document.querySelector('.map__features');
-    filterFormCheckbox.addEventListener('change', function (evt) {
-      if (filterState[evt.target.id] === false) {
-        filterState[evt.target.id] = true;
-      } else {
-        filterState[evt.target.id] = false;
-      }
-
-      window.pin.render(filterPins().slice(0, maxPins));
-      window.map.addPinsClickHandler();
-    });
+  //  Функция для debounce (устранения дребезга)
+  var getCallbackRenderPins = function () {
+    window.pin.render(filterPins().slice(0, maxPins));
+    window.map.addPinsClickHandler();
   };
 
-  mapFilters.addEventListener('change', function () {
-    window.utils.debounce(changeFlterFormElement);
+  //  ловлю изменения пользователя на всех select
+  var filterFormSelects = document.querySelectorAll('.map__filters select');
+  for (var s = 0; s < filterFormSelects.length; s++) {
+    filterFormSelects[s].addEventListener('change', function (evt) {
+
+      filterState[evt.target.id] = evt.target.value;
+
+      if (filterPins().length) {
+        window.utils.debounce(getCallbackRenderPins);
+      } else {
+        window.pin.deletePins();
+      }
+    });
+  }
+
+  //  ловлю изменения пользователя на чекбоксах
+  var filterFormCheckbox = document.querySelector('.map__features');
+  filterFormCheckbox.addEventListener('change', function (evt) {
+    if (filterState[evt.target.id] === false) {
+      filterState[evt.target.id] = true;
+    } else {
+      filterState[evt.target.id] = false;
+    }
+    window.utils.debounce(getCallbackRenderPins);
   });
 
 })();
