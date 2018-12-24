@@ -64,6 +64,12 @@
     addPinsClickHandler();
   };
 
+  var activateMap = function () {
+    mainMap.classList.remove('map--faded');
+    window.form.mainForm.classList.remove('ad-form--disabled');
+
+    window.backend.load(successHandler, window.utils.errorHandler);
+  };
   var activeState = false;
 
   pinHandler.addEventListener('mousedown', function (evt) {
@@ -80,10 +86,7 @@
       if (!activeState) {
         activeState = true;
 
-        mainMap.classList.remove('map--faded');
-        window.form.mainForm.classList.remove('ad-form--disabled');
-
-        window.backend.load(successHandler, window.utils.errorHandler);
+        activateMap();
       }
 
       var shift = {
@@ -144,6 +147,7 @@
     pinHandler: pinHandler,
     cardAvailable: cardAvailable,
     addPinsClickHandler: addPinsClickHandler,
-    successHandler: successHandler
+    successHandler: successHandler,
+    activateMap: activateMap
   };
 })();

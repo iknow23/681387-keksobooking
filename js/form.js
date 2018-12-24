@@ -155,7 +155,7 @@
       mainForm.reset();
       disable();
 
-      window.map.pinHandler.addEventListener('click', window.map.successHandler);
+      window.map.pinHandler.addEventListener('click', window.map.activateMap);
 
       resetPreviews();
     };
