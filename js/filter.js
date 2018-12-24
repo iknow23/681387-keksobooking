@@ -63,7 +63,7 @@
     return filteredArray;
   };
 
-  //  Функция для debounce (устранения дребезга)
+  //  Функция для debounce (устранение дребезга)
   var getCallbackRenderPins = function () {
     window.pin.render(filterPins().slice(0, maxPins));
     window.map.addPinsClickHandler();
