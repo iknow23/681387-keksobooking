@@ -111,6 +111,15 @@
     timeInSelect.value = timeOutSelect.value;
   });
 
+  //  сбрасываю загруженные картинки в форме
+  var resetPreviews = function () {
+    var previewAvatar = document.querySelector('.ad-form-header__preview');
+    previewAvatar.innerHTML = '<img src="img/muffin-grey.svg" alt="Аватар пользователя" width="40" height="44">';
+
+    var previewAppartmentPhoto = document.querySelector('.ad-form__photo');
+    previewAppartmentPhoto.innerHTML = '';
+  };
+
   mainForm.addEventListener('submit', function (evt) {
     var data = new FormData(mainForm);
 
@@ -147,6 +156,8 @@
       disable();
 
       window.map.pinHandler.addEventListener('click', window.map.successHandler);
+
+      resetPreviews();
     };
 
     var errorHandler = function () {
