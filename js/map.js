@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var mainMap = document.querySelector('.map');
   var similarListElement = document.querySelector('.map__pins');
 
@@ -147,5 +146,4 @@
     addPinsClickHandler: addPinsClickHandler,
     successHandler: successHandler
   };
-
 })();

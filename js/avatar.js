@@ -2,7 +2,6 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  window.avatar = FILE_TYPES;
 
   var fileChooser = document.querySelector('.ad-form__field input[type=file]');
   var preview = document.querySelector('.ad-form-header__preview img');
@@ -25,4 +24,6 @@
       reader.readAsDataURL(file);
     }
   });
+
+  window.avatar = FILE_TYPES;
 })();

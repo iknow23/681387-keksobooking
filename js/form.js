@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var mainForm = document.querySelector('.ad-form');
 
   //  активация страницы, отключаю все элементы ввода формы
@@ -21,6 +20,7 @@
   var capacitySelect = document.querySelector('#capacity');
   var roomNumberOptions = roomNumberSelect.querySelectorAll('option');
   var capacityOptions = capacitySelect.querySelectorAll('option');
+
   /**
    * очистка полей
    */
@@ -189,5 +189,4 @@
     fillAdress: fillAdress,
     enable: enable
   };
-
 })();

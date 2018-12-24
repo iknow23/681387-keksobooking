@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   //  создание меток объявлений
   var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -54,5 +53,4 @@
     render: render,
     deletePins: deletePins
   };
-
 })();

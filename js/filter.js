@@ -1,11 +1,11 @@
 'use strict';
 
 (function () {
-
   var Price = {
     LOW: 10000,
     HIGH: 50000
   };
+
   var maxPins = 5;
 
   var filterState = {
@@ -92,5 +92,4 @@
     }
     window.utils.debounce(getCallbackRenderPins);
   });
-
 })();

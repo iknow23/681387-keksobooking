@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var DEBOUNCE_INTERVAL = 1200;
 
   var errorHandler = function (errorMessage) {
     var node = document.createElement('div');
@@ -16,7 +17,6 @@
   };
 
   var lastTimeout;
-  var DEBOUNCE_INTERVAL = 1200;
 
   var debounce = function (callback) {
     if (lastTimeout) {
@@ -29,5 +29,4 @@
     errorHandler: errorHandler,
     debounce: debounce
   };
-
 })();
