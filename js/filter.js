@@ -2,8 +2,6 @@
 
 (function () {
 
-  var mapFilters = document.querySelector('.map__filters');
-
   var Price = {
     LOW: 10000,
     HIGH: 50000
