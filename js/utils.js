@@ -15,8 +15,19 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
+  var lastTimeout;
+  var DEBOUNCE_INTERVAL = 3000;
+
+  var debounce = function (callback) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(callback, DEBOUNCE_INTERVAL);
+  };
+
   window.utils = {
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    debounce: debounce
   };
 
 })();

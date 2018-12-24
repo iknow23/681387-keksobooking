@@ -2,6 +2,8 @@
 
 (function () {
 
+  var mapFilters = document.querySelector('.map__filters');
+
   var Price = {
     LOW: 10000,
     HIGH: 50000
@@ -61,32 +63,39 @@
     return filteredArray;
   };
 
-  //  ловлю изменения пользователя на всех select
-  var filterFormSelects = document.querySelectorAll('.map__filters select');
-  for (var s = 0; s < filterFormSelects.length; s++) {
-    filterFormSelects[s].addEventListener('change', function (evt) {
-      filterState[evt.target.id] = evt.target.value;
+  var changeFlterFormElement = function () {
+    //  ловлю изменения пользователя на всех select
+    var filterFormSelects = document.querySelectorAll('.map__filters select');
+    for (var s = 0; s < filterFormSelects.length; s++) {
+      filterFormSelects[s].addEventListener('change', function (evt) {
 
-      if (filterPins().length) {
-        window.pin.render(filterPins().slice(0, maxPins));
-        window.map.addPinsClickHandler();
-      } else {
-        window.pin.deletePins();
-      }
-    });
-  }
+        filterState[evt.target.id] = evt.target.value;
 
-  //  ловлю изменения пользователя на чекбоксах
-  var filterFormCheckbox = document.querySelector('.map__features');
-  filterFormCheckbox.addEventListener('change', function (evt) {
-    if (filterState[evt.target.id] === false) {
-      filterState[evt.target.id] = true;
-    } else {
-      filterState[evt.target.id] = false;
+        if (filterPins().length) {
+          window.pin.render(filterPins().slice(0, maxPins));
+          window.map.addPinsClickHandler();
+        } else {
+          window.pin.deletePins();
+        }
+      });
     }
 
-    window.pin.render(filterPins().slice(0, maxPins));
-    window.map.addPinsClickHandler();
+    //  ловлю изменения пользователя на чекбоксах
+    var filterFormCheckbox = document.querySelector('.map__features');
+    filterFormCheckbox.addEventListener('change', function (evt) {
+      if (filterState[evt.target.id] === false) {
+        filterState[evt.target.id] = true;
+      } else {
+        filterState[evt.target.id] = false;
+      }
+
+      window.pin.render(filterPins().slice(0, maxPins));
+      window.map.addPinsClickHandler();
+    });
+  };
+
+  mapFilters.addEventListener('change', function () {
+    window.utils.debounce(changeFlterFormElement);
   });
 
 })();
