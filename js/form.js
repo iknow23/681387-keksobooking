@@ -147,11 +147,13 @@
 
     similarElement.appendChild(successElement);
 
-    document.addEventListener('keydown', function (event) {
+    var documentKeydownHandler = function (event) {
       if (event.keyCode === window.data.Code.ESC) {
         similarElement.removeChild(successElement);
+        document.removeEventListener('keydown', documentKeydownHandler);
       }
-    });
+    };
+    document.addEventListener('keydown', documentKeydownHandler);
 
     resetContent();
     resetPreviews();

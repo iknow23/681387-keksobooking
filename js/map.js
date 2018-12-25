@@ -42,12 +42,17 @@
         var popupCloseButton = document.querySelector('.popup__close');
         popupCloseButton.addEventListener('click', function () {
           deleteOpenedCard();
+          document.removeEventListener('keydown', documentKeydownHandler);
         });
-        document.addEventListener('keydown', function (keyEvt) {
+
+        var documentKeydownHandler = function (keyEvt) {
           if (keyEvt.keyCode === window.data.Code.ESC) {
             deleteOpenedCard();
+            document.removeEventListener('keydown', documentKeydownHandler);
           }
-        });
+        };
+
+        document.addEventListener('keydown', documentKeydownHandler);
       });
     }
   };
