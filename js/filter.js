@@ -102,5 +102,17 @@
     }
   };
 
-  window.filter = resetCheckbox;
+  //  сбрасываю селекты фильтра
+  var resetSelects = function () {
+    for (var key in filterState) {
+      if (filterState[key] !== 'any') {
+        filterState[key] = 'any';
+      }
+    }
+  };
+
+  window.filter =  {
+    resetCheckbox: resetCheckbox,
+    resetSelects: resetSelects
+  }
 })();

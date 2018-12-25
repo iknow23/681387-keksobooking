@@ -129,7 +129,8 @@
     mainForm.reset();
     mapFilters.reset();
     disable();
-    window.filter();
+    window.filter.resetCheckbox();
+    window.filter.resetSelects();
     window.map.pinHandler.addEventListener('click', window.map.onMouseMove);
   };
 
