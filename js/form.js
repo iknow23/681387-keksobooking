@@ -188,7 +188,8 @@
   });
 
   mainForm.addEventListener('reset', function () {
-    successHandler();
+    resetContent();
+    resetPreviews();
   });
 
   var enable = function () {
