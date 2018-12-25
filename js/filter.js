@@ -92,4 +92,15 @@
     }
     window.utils.debounce(getCallbackRenderPins);
   });
+
+  //  сбрасываю отметки чекбоксов
+  var resetCheckbox = function () {
+    for (var key in filterState) {
+      if (filterState[key] === true) {
+        filterState[key] = false;
+      }
+    }
+  };
+
+  window.filter = resetCheckbox;
 })();

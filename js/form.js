@@ -129,7 +129,7 @@
     mainForm.reset();
     mapFilters.reset();
     disable();
-
+    window.filter();
     window.map.pinHandler.addEventListener('click', window.map.onMouseMove);
   };
 
@@ -172,11 +172,13 @@
     button.addEventListener('click', function () {
       similarElement.removeChild(errorElement);
     });
-    document.addEventListener('keydown', function (e) {
+    var documentKeydownHandler = function (e) {
       if (e.keyCode === window.data.Code.ESC) {
         similarElement.removeChild(errorElement);
+        document.removeEventListener('keydown', documentKeydownHandler);
       }
-    });
+    };
+    document.addEventListener('keydown', documentKeydownHandler);
   };
 
   mainForm.addEventListener('submit', function (evt) {
