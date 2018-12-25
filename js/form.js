@@ -140,57 +140,49 @@
     previewAppartmentPhoto.innerHTML = '';
   };
 
+  var successHandler = function () {
+    var similarElement = document.querySelector('main');
+    var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
+    var successElement = similarSuccessTemplate.cloneNode(true);
+
+    similarElement.appendChild(successElement);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.keyCode === window.data.Code.ESC) {
+        similarElement.removeChild(successElement);
+      }
+    });
+
+    resetContent();
+    resetPreviews();
+  };
+
+  var errorHandler = function () {
+    var similarElement = document.querySelector('main');
+    var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var errorElement = similarErrorTemplate.cloneNode(true);
+
+    similarElement.appendChild(errorElement);
+
+    var button = errorElement.querySelector('.error__button');
+    button.addEventListener('click', function () {
+      similarElement.removeChild(errorElement);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.keyCode === window.data.Code.ESC) {
+        similarElement.removeChild(errorElement);
+      }
+    });
+  };
+
   mainForm.addEventListener('submit', function (evt) {
     var data = new FormData(mainForm);
-
-    var successHandler = function () {
-      var similarElement = document.querySelector('main');
-      var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
-      var successElement = similarSuccessTemplate.cloneNode(true);
-
-      similarElement.appendChild(successElement);
-
-      document.addEventListener('click', function () {
-        similarElement.removeChild(successElement);
-      });
-
-      document.addEventListener('keydown', function (event) {
-        if (event.keyCode === window.data.Code.ESC) {
-          similarElement.removeChild(successElement);
-        }
-      });
-
-      resetContent();
-
-      resetPreviews();
-    };
-
-    var errorHandler = function () {
-      var similarElement = document.querySelector('main');
-      var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
-      var errorElement = similarErrorTemplate.cloneNode(true);
-
-      similarElement.appendChild(errorElement);
-
-      var button = errorElement.querySelector('.error__button');
-      button.addEventListener('click', function () {
-        similarElement.removeChild(errorElement);
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.keyCode === window.data.Code.ESC) {
-          similarElement.removeChild(errorElement);
-        }
-      });
-    };
-
     window.backend.upload(data, successHandler, errorHandler);
-
     evt.preventDefault();
   });
 
   mainForm.addEventListener('reset', function () {
     resetContent();
-
     resetPreviews();
   });
 
