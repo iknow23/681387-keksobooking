@@ -130,7 +130,7 @@
     mapFilters.reset();
     disable();
 
-    window.map.pinHandler.addEventListener('click', window.map.activateMap);
+    window.map.pinHandler.addEventListener('click', window.map.onMouseMove);
   };
 
   //  сбрасываю загруженные картинки в форме
@@ -186,8 +186,7 @@
   });
 
   mainForm.addEventListener('reset', function () {
-    resetContent();
-    resetPreviews();
+    successHandler();
   });
 
   var enable = function () {

@@ -72,11 +72,14 @@
   var activateMap = function () {
     mainMap.classList.remove('map--faded');
     window.form.mainForm.classList.remove('ad-form--disabled');
-
     window.backend.load(successHandler, window.utils.errorHandler);
   };
-  var activeState = false;
 
+  var checkPageState = function () {
+    return mainMap.classList.contains('map--faded');
+  };
+
+  var onMouseMove;
   pinHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -85,12 +88,11 @@
       y: evt.clientY
     };
 
-    var onMouseMove = function (moveEvt) {
+    onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      if (!activeState) {
-        activeState = true;
-
+      var isPageDisabled = checkPageState();
+      if (isPageDisabled) {
         activateMap();
       }
 
@@ -153,6 +155,7 @@
     cardAvailable: cardAvailable,
     addPinsClickHandler: addPinsClickHandler,
     successHandler: successHandler,
-    activateMap: activateMap
+    activateMap: activateMap,
+    onMouseMove: onMouseMove
   };
 })();
