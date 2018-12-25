@@ -2,6 +2,7 @@
 
 (function () {
   var mainForm = document.querySelector('.ad-form');
+  var mapFilters = document.querySelector('.map__filters');
 
   //  активация страницы, отключаю все элементы ввода формы
   var formElements = document.querySelectorAll('fieldset');
@@ -126,6 +127,7 @@
 
     mainForm.classList.add('ad-form--disabled');
     mainForm.reset();
+    mapFilters.reset();
     disable();
 
     window.map.pinHandler.addEventListener('click', window.map.activateMap);
