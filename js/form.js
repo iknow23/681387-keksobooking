@@ -111,6 +111,26 @@
     timeInSelect.value = timeOutSelect.value;
   });
 
+  //  сбрасываю форму и перевожу контент в неактивное состояние
+  var resetContent = function () {
+    window.map.mainMap.classList.add('map--faded');
+    window.map.cardAvailable();
+
+    var pinsElement = document.querySelector('.map__pins');
+    var pinsList = pinsElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < pinsList.length; i++) {
+      pinsElement.removeChild(pinsList[i]);
+    }
+    window.map.pinHandler.style.left = '570px';
+    window.map.pinHandler.style.top = '375px';
+
+    mainForm.classList.add('ad-form--disabled');
+    mainForm.reset();
+    disable();
+
+    window.map.pinHandler.addEventListener('click', window.map.activateMap);
+  };
+
   //  сбрасываю загруженные картинки в форме
   var resetPreviews = function () {
     var previewAvatar = document.querySelector('.ad-form-header__preview');
@@ -140,22 +160,7 @@
         }
       });
 
-      window.map.mainMap.classList.add('map--faded');
-      window.map.cardAvailable();
-
-      var pinsElement = document.querySelector('.map__pins');
-      var pinsList = pinsElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-      for (var i = 0; i < pinsList.length; i++) {
-        pinsElement.removeChild(pinsList[i]);
-      }
-      window.map.pinHandler.style.left = '570px';
-      window.map.pinHandler.style.top = '375px';
-
-      mainForm.classList.add('ad-form--disabled');
-      mainForm.reset();
-      disable();
-
-      window.map.pinHandler.addEventListener('click', window.map.activateMap);
+      resetContent();
 
       resetPreviews();
     };
@@ -181,6 +186,12 @@
     window.backend.upload(data, successHandler, errorHandler);
 
     evt.preventDefault();
+  });
+
+  mainForm.addEventListener('reset', function () {
+    resetContent();
+
+    resetPreviews();
   });
 
   var enable = function () {
