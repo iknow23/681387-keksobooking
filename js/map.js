@@ -51,7 +51,7 @@
             deleteOpenedCard();
             document.removeEventListener('keydown', documentKeydownHandler);
           }
-          if (window.form.mainForm.submit || window.form.mainForm.reset) {
+          if (window.form.mainForm.submit) {
             document.removeEventListener('keydown', documentKeydownHandler);
           }
         };

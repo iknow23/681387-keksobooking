@@ -200,6 +200,7 @@
   resetButton.addEventListener('click', function () {
     resetContent();
     resetPreviews();
+    document.removeEventListener('keydown', window.map.documentKeydownHandler);
   });
 
   var enable = function () {
