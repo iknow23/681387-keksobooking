@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var DEBOUNCE_INTERVAL = 1200;
 
   var errorHandler = function (errorMessage) {
     var node = document.createElement('div');
@@ -15,8 +16,29 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.utils = {
-    errorHandler: errorHandler
+  var resetCapacityOptions = function () {
+    var capacityOptions = document.querySelectorAll('#capacity option');
+    for (var i = 0; i < capacityOptions.length; i++) {
+      if (capacityOptions[i].value !== '1') {
+        capacityOptions[i].disabled = true;
+      } else {
+        capacityOptions[i].disabled = false;
+        capacityOptions[i].selected = true;
+      }
+    }
   };
 
+  var lastTimeout;
+  var debounce = function (callback) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(callback, DEBOUNCE_INTERVAL);
+  };
+
+  window.utils = {
+    errorHandler: errorHandler,
+    resetCapacityOptions: resetCapacityOptions,
+    debounce: debounce
+  };
 })();

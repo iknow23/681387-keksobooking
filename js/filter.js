@@ -1,11 +1,11 @@
 'use strict';
 
 (function () {
-
   var Price = {
     LOW: 10000,
     HIGH: 50000
   };
+
   var maxPins = 5;
 
   var filterState = {
@@ -61,15 +61,21 @@
     return filteredArray;
   };
 
+  //  Функция для debounce (устранение дребезга)
+  var getCallbackRenderPins = function () {
+    window.pin.render(filterPins().slice(0, maxPins));
+    window.map.addPinsClickHandler();
+  };
+
   //  ловлю изменения пользователя на всех select
   var filterFormSelects = document.querySelectorAll('.map__filters select');
   for (var s = 0; s < filterFormSelects.length; s++) {
     filterFormSelects[s].addEventListener('change', function (evt) {
+
       filterState[evt.target.id] = evt.target.value;
 
       if (filterPins().length) {
-        window.pin.render(filterPins().slice(0, maxPins));
-        window.map.addPinsClickHandler2();
+        window.utils.debounce(getCallbackRenderPins);
       } else {
         window.pin.deletePins();
       }
@@ -84,9 +90,21 @@
     } else {
       filterState[evt.target.id] = false;
     }
-
-    window.pin.render(filterPins().slice(0, maxPins));
-    window.map.addPinsClickHandler2();
+    window.utils.debounce(getCallbackRenderPins);
+    document.removeEventListener('keydown', window.map.documentKeydownHandler);
   });
 
+  //  сбрасываю отметки чекбоксов
+  var resetCheckbox = function () {
+    for (var key in filterState) {
+      if (filterState[key] === true) {
+        filterState[key] = false;
+      }
+    }
+  };
+
+  window.filter = {
+    filterFormCheckbox: filterFormCheckbox,
+    resetCheckbox: resetCheckbox
+  };
 })();
