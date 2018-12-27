@@ -3,6 +3,9 @@
 (function () {
   var mainForm = document.querySelector('.ad-form');
   var mapFilters = document.querySelector('.map__filters');
+  var inputAdress = document.querySelector('#address');
+  var mainPinHeight = 80;
+  var mainPinHalf = 32;
 
   //  активация страницы, отключаю все элементы ввода формы
   var formElements = document.querySelectorAll('fieldset');
@@ -61,23 +64,7 @@
     }
   };
 
-  //  синхронизация кол-ва комнат с кол-вом гостей
-  var capacityHandler = function (evt) {
-    clearOptions();
-    var current = evt.currentTarget.selectedIndex;
-    if (current === 0) {
-      roomNumberOptions[2].selected = true;
-    } else if (current === 1) {
-      roomNumberOptions[1].selected = true;
-    } else if (current === 2) {
-      roomNumberOptions[0].selected = true;
-    } else if (current === 3) {
-      roomNumberOptions[3].selected = true;
-    }
-  };
-
   roomNumberSelect.addEventListener('change', roomNumberHandler);
-  capacitySelect.addEventListener('change', capacityHandler);
 
   //  работа с полями 'тип жилья' и 'цена за ночь'
   var typeOfRoomsSelect = document.querySelector('#type');
@@ -128,8 +115,10 @@
     mainForm.classList.add('ad-form--disabled');
     mainForm.reset();
     mapFilters.reset();
+    window.utils.resetCapacityOptions();
     disable();
     window.filter();
+    inputAdress.value = (window.map.pinHandler.offsetLeft  + mainPinHalf) + ', ' + (window.map.pinHandler.offsetTop + mainPinHeight);
     window.map.pinHandler.addEventListener('click', window.map.onMouseMove);
   };
 
@@ -149,12 +138,20 @@
 
     similarElement.appendChild(successElement);
 
-    var documentKeydownHandler = function (event) {
-      if (event.keyCode === window.data.Code.ESC) {
+    var documentClickHandler = function () {
+      similarElement.removeChild(successElement);
+      document.removeEventListener('click', documentClickHandler);
+      document.removeEventListener('keydown', documentKeydownHandler);
+    };
+    var documentKeydownHandler = function (e) {
+      if (e.keyCode === window.data.Code.ESC) {
         similarElement.removeChild(successElement);
         document.removeEventListener('keydown', documentKeydownHandler);
+        document.removeEventListener('click', documentClickHandler);
       }
     };
+    
+    document.addEventListener('click', documentClickHandler);
     document.addEventListener('keydown', documentKeydownHandler);
 
     resetContent();
@@ -168,16 +165,27 @@
 
     similarElement.appendChild(errorElement);
 
-    var button = errorElement.querySelector('.error__button');
-    button.addEventListener('click', function () {
+    var documentClickHandler = function () {
       similarElement.removeChild(errorElement);
-    });
+      document.removeEventListener('click', documentClickHandler);
+      document.removeEventListener('keydown', documentKeydownHandler);
+    };
     var documentKeydownHandler = function (e) {
       if (e.keyCode === window.data.Code.ESC) {
         similarElement.removeChild(errorElement);
         document.removeEventListener('keydown', documentKeydownHandler);
+        document.removeEventListener('click', documentClickHandler);
       }
     };
+    
+    var button = errorElement.querySelector('.error__button');
+    button.addEventListener('click', function () {
+      similarElement.removeChild(errorElement);
+      document.removeEventListener('click', documentClickHandler);
+      document.removeEventListener('keydown', documentKeydownHandler);
+    });
+    
+    document.addEventListener('click', documentClickHandler);
     document.addEventListener('keydown', documentKeydownHandler);
   };
 

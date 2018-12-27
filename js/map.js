@@ -50,6 +50,9 @@
             deleteOpenedCard();
             document.removeEventListener('keydown', documentKeydownHandler);
           }
+          if (window.form.mainForm.submit || window.form.mainForm.reset) {
+            document.removeEventListener('keydown', documentKeydownHandler);
+          }
         };
 
         document.addEventListener('keydown', documentKeydownHandler);
