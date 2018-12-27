@@ -15,15 +15,15 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
-  
+
   var resetCapacityOptions = function () {
     var capacityOptions = document.querySelectorAll('#capacity option');
     for (var i = 0; i < capacityOptions.length; i++) {
       if (capacityOptions[i].value !== '1') {
-          capacityOptions[i].disabled = true;
-        } else {
-          capacityOptions[i].disabled = false;
-        }
+        capacityOptions[i].disabled = true;
+      } else {
+        capacityOptions[i].disabled = false;
+      }
     }
   };
 
