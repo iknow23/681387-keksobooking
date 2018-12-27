@@ -116,7 +116,7 @@
     mapFilters.reset();
     window.utils.resetCapacityOptions();
     disable();
-    window.filter();
+    window.filter.resetCheckbox();
     inputAdress.value = (window.map.pinHandler.offsetLeft + mainPinHalf) + ', ' + (window.map.pinHandler.offsetTop + mainPinHeight);
     window.map.pinHandler.addEventListener('click', window.map.onMouseMove);
   };
@@ -188,13 +188,16 @@
     document.addEventListener('keydown', documentKeydownHandler);
   };
 
+  //  отправка формы (submit)
   mainForm.addEventListener('submit', function (evt) {
     var data = new FormData(mainForm);
     window.backend.upload(data, successHandler, errorHandler);
     evt.preventDefault();
   });
 
-  mainForm.addEventListener('reset', function () {
+  //  сброс формы (reset)
+  var resetButton = document.querySelector('.ad-form__reset');
+  resetButton.addEventListener('click', function () {
     resetContent();
     resetPreviews();
   });

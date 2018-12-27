@@ -91,6 +91,7 @@
       filterState[evt.target.id] = false;
     }
     window.utils.debounce(getCallbackRenderPins);
+    document.removeEventListener('keydown', window.map.documentKeydownHandler);
   });
 
   //  сбрасываю отметки чекбоксов
@@ -102,5 +103,8 @@
     }
   };
 
-  window.filter = resetCheckbox;
+  window.filter = {
+    filterFormCheckbox: filterFormCheckbox,
+    resetCheckbox: resetCheckbox
+  }
 })();

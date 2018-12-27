@@ -23,6 +23,7 @@
         capacityOptions[i].disabled = true;
       } else {
         capacityOptions[i].disabled = false;
+        capacityOptions[i].selected = true;
       }
     }
   };

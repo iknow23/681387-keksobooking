@@ -31,6 +31,7 @@
   /**
   * рендер карточек объявлений при нажатии на метки
   */
+  var documentKeydownHandler;
   var addPinsClickHandler = function () {
     var pinsList = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < pinsList.length; i++) {
@@ -45,7 +46,7 @@
           document.removeEventListener('keydown', documentKeydownHandler);
         });
 
-        var documentKeydownHandler = function (keyEvt) {
+        documentKeydownHandler = function (keyEvt) {
           if (keyEvt.keyCode === window.data.Code.ESC) {
             deleteOpenedCard();
             document.removeEventListener('keydown', documentKeydownHandler);
@@ -62,13 +63,10 @@
 
   //  активация карты и DRAG-N-DROP
   var pinHandler = document.querySelector('.map__pin--main');
-
   var successHandler = function (appartments) {
     window.data.appartments = appartments;
     window.pin.render(appartments.slice(0, 5));
-
     window.form.enable();
-
     addPinsClickHandler();
   };
 
@@ -144,7 +142,6 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -159,6 +156,7 @@
     addPinsClickHandler: addPinsClickHandler,
     successHandler: successHandler,
     activateMap: activateMap,
-    onMouseMove: onMouseMove
+    onMouseMove: onMouseMove,
+    documentKeydownHandler: documentKeydownHandler
   };
 })();
