@@ -106,5 +106,5 @@
   window.filter = {
     filterFormCheckbox: filterFormCheckbox,
     resetCheckbox: resetCheckbox
-  }
+  };
 })();
