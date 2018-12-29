@@ -9,9 +9,9 @@
     var deleted = function () {
       var pinsMap = document.querySelector('.map__pins');
       var pinsList = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      for (var i = 0; i < pinsList.length; i++) {
-        pinsMap.removeChild(pinsList[i]);
-      }
+      pinsList.forEach(function (item) {
+        pinsMap.removeChild(item);
+      });
     };
     //  проверка наличия меток
     var elementAvailable = document.querySelector('.map__pin');

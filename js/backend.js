@@ -5,23 +5,26 @@
     LOAD: 'https://js.dump.academy/keksobooking/data',
     UPLOAD: 'https://js.dump.academy/keksobooking'
   };
-  var STATUS_GOOD = 200;
-  var TEN_SECONDS = 10000;
+  var Code = {
+    GOOD: 200,
+    NOT_FOUND: 404
+  };
+  var TIME_OUT = 10000;
 
-  /**
-   * получение данных с сервера
-   * @param  {function} onLoad
-   * @param  {function} onError
-   */
-  var load = function (onLoad, onError) {
+  var activationXhr = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === STATUS_GOOD) {
-        onLoad(xhr.response);
-      } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      switch (xhr.status) {
+        case Code.GOOD:
+          onLoad(xhr.response);
+          break;
+        case Code.NOT_FOUND:
+          onError('Статус ответа: ' + xhr.status + ' ' + ' Страница не найдена');
+          break;
+        default:
+          onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
@@ -29,38 +32,22 @@
       onError('Произошла ошибка соединения');
     });
 
+    xhr.timeout = TIME_OUT;
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = TEN_SECONDS;
+    return xhr;
+  };
 
+  var load = function (onLoad, onError) {
+    var xhr = activationXhr(onLoad, onError);
     xhr.open('GET', Url.LOAD);
     xhr.send();
   };
 
-  /**
-   * отправка данных на сервер
-   * @param  {object} data
-   * @param  {function} onLoad
-   * @param  {function} onError
-   */
   var upload = function (data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === STATUS_GOOD) {
-        onLoad(xhr.response);
-      } else {
-        onError('Статус отправки: ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка');
-    });
-
+    var xhr = activationXhr(onLoad, onError);
     xhr.open('POST', Url.UPLOAD);
     xhr.send(data);
   };

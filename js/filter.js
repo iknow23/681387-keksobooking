@@ -77,6 +77,7 @@
       if (filterPins().length) {
         window.utils.debounce(getCallbackRenderPins);
       } else {
+        window.map.cardAvailable();
         window.pin.deletePins();
       }
     });
@@ -85,12 +86,20 @@
   //  ловлю изменения пользователя на чекбоксах
   var filterFormCheckbox = document.querySelector('.map__features');
   filterFormCheckbox.addEventListener('change', function (evt) {
+
     if (filterState[evt.target.id] === false) {
       filterState[evt.target.id] = true;
     } else {
       filterState[evt.target.id] = false;
     }
-    window.utils.debounce(getCallbackRenderPins);
+
+    if (filterPins().length) {
+      window.utils.debounce(getCallbackRenderPins);
+    } else {
+      window.map.cardAvailable();
+      window.pin.deletePins();
+    }
+
     document.removeEventListener('keydown', window.map.documentKeydownHandler);
   });
 
