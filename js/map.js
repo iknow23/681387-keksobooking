@@ -120,19 +120,25 @@
       if (moveEvt.pageX < 200) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (offsetLeft - mainPinHalf) + 'px';
-      } else if (moveEvt.pageY < 180) {
+        return;
+      }
+      if (moveEvt.pageY < 180) {
         pinHandler.style.top = (offsetTop + 130) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-      } else if (moveEvt.pageX > 1390) {
+        return;
+      }
+      if (moveEvt.pageX > 1390) {
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (offsetRight - mainPinHalf) + 'px';
-      } else if (moveEvt.pageY > 650) {
+        return;
+      }
+      if (moveEvt.pageY > 650) {
         pinHandler.style.top = (offsetBottom - 50 - mainPinHalf) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-      } else {
+        return;
+      }
         pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
-      }
 
       window.form.fillAdress(pinHandler.offsetLeft + mainPinHalf, pinHandler.offsetTop + mainPinHeight);
     };
