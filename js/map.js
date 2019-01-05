@@ -137,8 +137,8 @@
         pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
         return;
       }
-        pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
-        pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
+      pinHandler.style.top = (pinHandler.offsetTop - shift.y) + 'px';
+      pinHandler.style.left = (pinHandler.offsetLeft - shift.x) + 'px';
 
       window.form.fillAdress(pinHandler.offsetLeft + mainPinHalf, pinHandler.offsetTop + mainPinHeight);
     };
