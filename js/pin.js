@@ -29,10 +29,9 @@
 
     var pinElement = similarPinTemplate.cloneNode(true);
 
-    pinElement.style.left = appartment.location.x + 'px';
-    pinElement.style.top = appartment.location.y + 'px';
-    pinElement.querySelector('img').src = appartment.author.avatar;
-    pinElement.querySelector('img').alt = appartment.offer.title;
+    pinElement.setAttribute('style', 'top:' + appartment.location.y + 'px' + ';left:' + appartment.location.x + 'px');
+    pinElement.querySelector('img').setAttribute('src', appartment.author.avatar);
+    pinElement.querySelector('img').setAttribute('alt', appartment.offer.title);
     pinElement.setAttribute('data-id', index);
 
     return pinElement;
