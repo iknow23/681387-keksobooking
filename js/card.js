@@ -31,7 +31,7 @@
       cardElement.querySelector('.popup__features').innerHTML = '';
       for (var j = 0; j < appartment.offer.features.length; j++) {
         var elementLi = document.createElement('li');
-        elementLi.className = 'popup__feature popup__feature--' + appartment.offer.features[j];
+        elementLi.setAttribute('class', ('popup__feature popup__feature--' + appartment.offer.features[j]));
         cardElement.querySelector('.popup__features').appendChild(elementLi);
       }
     } else {
@@ -44,10 +44,10 @@
       cardElement.querySelector('.popup__photos').innerHTML = '';
       for (var i = 0; i < appartment.offer.photos.length; i++) {
         var elementImg = document.createElement('img');
-        elementImg.className = 'popup__photo';
-        elementImg.src = appartment.offer.photos[i];
-        elementImg.width = 45;
-        elementImg.height = 40;
+        elementImg.setAttribute('class', 'popup__photo');
+        elementImg.setAttribute('src', appartment.offer.photos[i]);
+        elementImg.setAttribute('width', 45);
+        elementImg.setAttribute('height', 40);
         cardElement.querySelector('.popup__photos').appendChild(elementImg);
         cardElement.querySelector('.popup__photos').querySelector('img').src = appartment.offer.photos[i];
       }
