@@ -10,9 +10,9 @@
   //  активация страницы, отключаю все элементы ввода формы
   var formElements = document.querySelectorAll('fieldset');
 
-  for (var j = 0; j < formElements.length; j++) {
-    formElements[j].disabled = true;
-  }
+  formElements.forEach(function (item) {
+    item.disabled = true;
+  });
 
   var fillAdress = function (left, top) {
     inputAdress.value = left + ', ' + top;
@@ -204,15 +204,15 @@
   });
 
   var enable = function () {
-    for (var i = 0; i < formElements.length; i++) {
-      formElements[i].disabled = false;
-    }
+    formElements.forEach(function (item) {
+      item.disabled = false;
+    });
   };
 
   var disable = function () {
-    for (var i = 0; i < formElements.length; i++) {
-      formElements[i].disabled = true;
-    }
+    formElements.forEach(function (item) {
+      item.disabled = true;
+    });
   };
 
   window.form = {
